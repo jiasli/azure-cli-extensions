@@ -7,7 +7,7 @@ import os
 import unittest
 
 from azure_devtools.scenario_tests import AllowLargeResponse
-from azure.cli.testsdk import (ScenarioTest, ResourceGroupPreparer)
+from azure.cli.testsdk import (ScenarioTest, ResourceGroupPreparer, StorageAccountPreparer)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
@@ -15,17 +15,71 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
 
-    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
-    def test_timeseriesinsights(self, resource_group):
+    def test_debug(self):
+        self.cmd('az storage account create -g jlrg -n tsistorage0318 --https-only')
+        keys = self.cmd('az storage account keys list -g jlrg -n tsistorage0318').get_output_in_json()
+        print(keys[0]['value'])
 
-        self.cmd('az timeseriesinsights environment create '
+    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
+    @StorageAccountPreparer()
+    def test_timeseriesinsights_environment(self, resource_group, storage_account):
+
+        # Test environment standard create
+        self.cmd('az timeseriesinsights environment standard create '
                  '--resource-group {rg} '
                  '--name "env1" '
-                 '--location "West US" '
+                 '--location "westus" '
                  '--sku-name "S1" '
                  '--sku-capacity "1" '
-                 '--data-retention-time "P31D"',
+                 '--data-retention-time "P31D" '
+                 '--partition-key-properties DeviceId1 '
+                 '--storage-limit-exceeded-behavior PauseIngress',
+                 checks=[self.check('name', 'env1')])
+
+        # Test environment longterm create
+        key = self.cmd('az storage account keys list -g {rg} -n {sa}').get_output_in_json()[0]['value']
+
+        self.cmd('az timeseriesinsights environment longterm create '
+                 '--resource-group {rg} '
+                 '--name "env2" '
+                 '--location "westus" '
+                 '--sku-name "L1" '
+                 '--sku-capacity "1" '
+                 '--data-retention "P31D" '
+                 '--time-series-id-properties DeviceId1 '
+                 '--storage-account-name {sa} '
+                 '--storage-management-key ' + key,
+                 checks=[self.check('name', 'env2')])
+
+        self.cmd('az timeseriesinsights environment show '
+                 '--resource-group {rg} '
+                 '--name "env1"',
+                 checks=[self.check('name', 'env1')])
+
+        self.cmd('az timeseriesinsights environment show '
+                 '--resource-group {rg} '
+                 '--name "env2"',
+                 checks=[self.check('name', 'env2')])
+
+        self.cmd('az timeseriesinsights environment list '
+                 '--resource-group {rg}',
+                 checks=[self.check('length(@)', 2)])
+
+        self.cmd('az timeseriesinsights environment list',
                  checks=[])
+
+        self.cmd('az timeseriesinsights environment delete '
+                 '--resource-group {rg} '
+                 '--name "env1"',
+                 checks=[])
+
+        self.cmd('az timeseriesinsights environment delete '
+                 '--resource-group {rg} '
+                 '--name "env2"',
+                 checks=[])
+
+    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
+    def test_timeseriesinsights_other(self, resource_group):
 
         self.cmd('az timeseriesinsights event-source create '
                  '--resource-group {rg} '
@@ -82,17 +136,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
                  '--environment-name "env1"',
                  checks=[])
 
-        self.cmd('az timeseriesinsights environment show '
-                 '--resource-group {rg} '
-                 '--name "env1"',
-                 checks=[])
 
-        self.cmd('az timeseriesinsights environment list '
-                 '--resource-group {rg}',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights environment list',
-                 checks=[])
 
         self.cmd('az timeseriesinsights operation list',
                  checks=[])
