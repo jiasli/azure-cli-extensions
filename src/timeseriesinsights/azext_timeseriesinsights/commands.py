@@ -41,8 +41,8 @@ def load_command_table(self, _):
         g.custom_command('update', 'update_timeseriesinsights_environment_longterm')
 
     with self.command_group('timeseriesinsights environment', timeseriesinsights_environments, client_factory=cf_environments) as g:
-        g.custom_command('delete', 'delete_timeseriesinsights_environment')
-        g.custom_show_command('show', 'get_timeseriesinsights_environment')
+        g.command('delete', 'delete')
+        g.show_command('show', 'get')
         g.custom_command('list', 'list_timeseriesinsights_environment', transform=gen_dict_to_list_transform(key='value'))
     # endregion
 
@@ -94,8 +94,8 @@ def load_command_table(self, _):
     with self.command_group('timeseriesinsights access-policy', timeseriesinsights_access_policies, client_factory=cf_access_policies) as g:
         g.custom_command('create', 'create_timeseriesinsights_access_policy')
         g.custom_command('update', 'update_timeseriesinsights_access_policy')
-        g.custom_command('delete', 'delete_timeseriesinsights_access_policy')
-        g.custom_show_command('show', 'get_timeseriesinsights_access_policy')
-        g.custom_command('list', 'list_timeseriesinsights_access_policy')
+        g.command('delete', 'delete')
+        g.show_command('show', 'get')
+        g.command('list', 'list_by_environment')
     # endregion
 

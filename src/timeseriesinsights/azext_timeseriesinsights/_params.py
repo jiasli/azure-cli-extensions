@@ -27,7 +27,7 @@ def load_arguments(self, _):
 # region environment
     with self.argument_context('timeseriesinsights environment') as c:
         c.argument('resource_group', resource_group_name_type)
-        c.argument('name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
+        c.argument('environment_name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('tags', tags_type)
         c.argument('sku_name', arg_type=get_enum_type(['S1', 'S2', 'P1', 'L1']), id_part=None, help='The name of this SKU.')
@@ -107,21 +107,9 @@ def load_arguments(self, _):
     with self.argument_context('timeseriesinsights access-policy') as c:
         c.argument('resource_group', resource_group_name_type)
         c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
+        c.argument('access_policy_name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
         c.argument('principal_object_id', help='The objectId of the principal in Azure Active Directory.')
         c.argument('description', help='An description of the access policy.')
         c.argument('roles', help='The list of roles the principal is assigned on the environment.', nargs='+')
-
-    with self.argument_context('timeseriesinsights access-policy create') as c:
-        pass
-
-    with self.argument_context('timeseriesinsights access-policy update') as c:
-        pass
-
-    with self.argument_context('timeseriesinsights access-policy delete') as c:
-        pass
-
-    with self.argument_context('timeseriesinsights access-policy show') as c:
-        pass
 
     # endregion
