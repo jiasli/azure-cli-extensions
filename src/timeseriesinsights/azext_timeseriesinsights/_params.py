@@ -21,7 +21,10 @@ def load_arguments(self, _):
     with self.argument_context('timeseriesinsights operation list') as c:
         pass
 
-    # region environment
+    with self.argument_context('timeseriesinsights') as c:
+        c.argument('resource_group', resource_group_name_type)
+
+# region environment
     with self.argument_context('timeseriesinsights environment') as c:
         c.argument('resource_group', resource_group_name_type)
         c.argument('name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
@@ -52,12 +55,12 @@ def load_arguments(self, _):
     # endregion
 
     # region event-source
+    with self.argument_context('timeseriesinsights event-source') as c:
+        c.argument('environment_name', help='The name of the Time Series Insights environment associated with the specified resource group.')
+        c.argument('name', arg_type=name_type, help='The name of the Time Series Insights event source associated with the specified environment.')
+
     with self.argument_context('timeseriesinsights event-source create') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights event source associated with the specified environment.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('tags', tags_type)
+        pass
 
     with self.argument_context('timeseriesinsights event-source update') as c:
         c.argument('resource_group', resource_group_name_type)
@@ -116,31 +119,24 @@ def load_arguments(self, _):
     # endregion
 
     # region access-policy
-    with self.argument_context('timeseriesinsights access-policy create') as c:
+    with self.argument_context('timeseriesinsights access-policy') as c:
         c.argument('resource_group', resource_group_name_type)
         c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
-        c.argument('description', id_part=None, help='An description of the access policy.')
-        c.argument('roles', id_part=None, help='The list of roles the principal is assigned on the environment.', nargs='+')
+        c.argument('name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
+        c.argument('principal_object_id', help='The objectId of the principal in Azure Active Directory.')
+        c.argument('description', help='An description of the access policy.')
+        c.argument('roles', help='The list of roles the principal is assigned on the environment.', nargs='+')
+
+    with self.argument_context('timeseriesinsights access-policy create') as c:
+        pass
 
     with self.argument_context('timeseriesinsights access-policy update') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
-        c.argument('description', id_part=None, help='An description of the access policy.')
-        c.argument('roles', id_part=None, help='The list of roles the principal is assigned on the environment.', nargs='+')
+        pass
 
     with self.argument_context('timeseriesinsights access-policy delete') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
+        pass
 
     with self.argument_context('timeseriesinsights access-policy show') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
+        pass
 
-    with self.argument_context('timeseriesinsights access-policy list') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
     # endregion

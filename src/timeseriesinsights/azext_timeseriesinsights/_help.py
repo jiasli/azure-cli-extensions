@@ -9,6 +9,11 @@
 from knack.help_files import helps  # pylint: disable=unused-import
 
 
+helps['timeseriesinsights'] = """
+type: group
+short-summary: Manage Azure Time Series Insights.
+"""
+
 helps['timeseriesinsights operation'] = """
     type: group
     short-summary: Commands to manage timeseriesinsights operation.

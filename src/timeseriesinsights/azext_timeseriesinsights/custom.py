@@ -139,22 +139,55 @@ def list_timeseriesinsights_environment(cmd, client,
     return client.list_by_subscription()
 
 
-def create_timeseriesinsights_event_source(cmd, client,
-                                           resource_group,
-                                           environment_name,
-                                           name,
-                                           location,
-                                           tags=None):
+def create_timeseriesinsights_event_source_eventhub(cmd, client,
+                                                    resource_group,
+                                                    environment_name,
+                                                    name, location,
+                                                    timestamp_property_name, event_source_resource_id,
+                                                    service_bus_namespace, event_hub_name,
+                                                    consumer_group_name, key_name, shared_access_key):
+    # https://docs.microsoft.com/en-us/rest/api/time-series-insights/management/eventsources/createorupdate
+
+    from azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models import EventHubEventSourceCreateOrUpdateParameters
+    body = {}
+    body['location'] = location
+    body['kind'] = 'Microsoft.EventHub'
+    body['timestamp_property_name'] = timestamp_property_name  # str
+    body['event_source_resource_id'] = event_source_resource_id  # str
+    body['service_bus_namespace'] = service_bus_namespace  # str
+    body['event_hub_name'] = event_hub_name  # str
+    body['consumer_group_name'] = consumer_group_name  # str
+    body['key_name'] = key_name  # str
+    body['shared_access_key'] = shared_access_key  # str
+
+    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name, parameters=body)
+
+def update_timeseriesinsights_event_source_eventhub(cmd, client,
+                                                    resource_group,
+                                                    environment_name,
+                                                    name,
+                                                    location=None,
+                                                    tags=None):
     return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name, location=location, tags=tags)
 
 
-def update_timeseriesinsights_event_source(cmd, client,
-                                           resource_group,
-                                           environment_name,
-                                           name,
-                                           location=None,
-                                           tags=None):
+def create_timeseriesinsights_event_source_iothub(cmd, client,
+                                                  resource_group,
+                                                  environment_name,
+                                                  name,
+                                                  location,
+                                                  tags=None):
     return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name, location=location, tags=tags)
+
+
+def update_timeseriesinsights_event_source_iothub(cmd, client,
+                                                  resource_group,
+                                                  environment_name,
+                                                  name,
+                                                  location,
+                                                  tags=None):
+    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name, location=location, tags=tags)
+
 
 
 def delete_timeseriesinsights_event_source(cmd, client,
@@ -237,9 +270,14 @@ def create_timeseriesinsights_access_policy(cmd, client,
                                             resource_group,
                                             environment_name,
                                             name,
+                                            principal_object_id=None,
                                             description=None,
                                             roles=None):
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, access_policy_name=name, description=description, roles=roles)
+    body = {}
+    body['principal_object_id'] = principal_object_id
+    body['description'] = description
+    body['roles'] = roles  # list
+    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, access_policy_name=name, parameters=body)
 
 
 def update_timeseriesinsights_access_policy(cmd, client,
@@ -248,7 +286,7 @@ def update_timeseriesinsights_access_policy(cmd, client,
                                             name,
                                             description=None,
                                             roles=None):
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, access_policy_name=name, description=description, roles=roles)
+    return client.update(resource_group_name=resource_group, environment_name=environment_name, access_policy_name=name, description=description, roles=roles)
 
 
 def delete_timeseriesinsights_access_policy(cmd, client,

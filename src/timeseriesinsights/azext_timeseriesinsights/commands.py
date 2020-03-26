@@ -49,17 +49,31 @@ def load_command_table(self, _):
     timeseriesinsights_event_sources = CliCommandType(
         operations_tmpl='azext_timeseriesinsights.vendored_sdks.timeseriesinsights.operations._event_sources_operations#EventSourcesOperations.{}',
         client_factory=cf_event_sources)
+
+    # region event-source
+    with self.command_group('timeseriesinsights event-source eventhub', timeseriesinsights_event_sources, client_factory=cf_event_sources) as g:
+        g.custom_command('create', 'create_timeseriesinsights_event_source_eventhub',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#EventHubEventSourceCreateOrUpdateParameters")
+        g.custom_command('update', 'update_timeseriesinsights_event_source_eventhub',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#EventHubEventSourceCreateOrUpdateParameters")
+
+    with self.command_group('timeseriesinsights event-source iothub', timeseriesinsights_event_sources, client_factory=cf_event_sources) as g:
+        g.custom_command('create', 'create_timeseriesinsights_event_source_iothub',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#IoTHubEventSourceCreateOrUpdateParameters")
+        g.custom_command('update', 'update_timeseriesinsights_event_source_iothub',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#IoTHubEventSourceCreateOrUpdateParameters")
+
     with self.command_group('timeseriesinsights event-source', timeseriesinsights_event_sources, client_factory=cf_event_sources) as g:
-        g.custom_command('create', 'create_timeseriesinsights_event_source')
-        g.custom_command('update', 'update_timeseriesinsights_event_source')
         g.custom_command('delete', 'delete_timeseriesinsights_event_source')
         g.custom_show_command('show', 'get_timeseriesinsights_event_source')
         g.custom_command('list', 'list_timeseriesinsights_event_source')
+    # endregion
 
     from ._client_factory import cf_reference_data_sets
     timeseriesinsights_reference_data_sets = CliCommandType(
         operations_tmpl='azext_timeseriesinsights.vendored_sdks.timeseriesinsights.operations._reference_data_sets_operations#ReferenceDataSetsOperations.{}',
         client_factory=cf_reference_data_sets)
+
     with self.command_group('timeseriesinsights reference-data-set', timeseriesinsights_reference_data_sets, client_factory=cf_reference_data_sets) as g:
         g.custom_command('create', 'create_timeseriesinsights_reference_data_set')
         g.custom_command('update', 'update_timeseriesinsights_reference_data_set')
