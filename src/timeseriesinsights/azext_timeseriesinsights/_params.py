@@ -57,7 +57,7 @@ def load_arguments(self, _):
     # region event-source
     with self.argument_context('timeseriesinsights event-source') as c:
         c.argument('environment_name', help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', arg_type=name_type, help='The name of the Time Series Insights event source associated with the specified environment.')
+        c.argument('event_source_name', arg_type=name_type, help='The name of the Time Series Insights event source associated with the specified environment.')
 
     with self.argument_context('timeseriesinsights event-source create') as c:
         pass
@@ -65,23 +65,8 @@ def load_arguments(self, _):
     with self.argument_context('timeseriesinsights event-source update') as c:
         c.argument('resource_group', resource_group_name_type)
         c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights event source associated with the specified environment.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
         c.argument('tags', tags_type)
-
-    with self.argument_context('timeseriesinsights event-source delete') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights event source associated with the specified environment.')
-
-    with self.argument_context('timeseriesinsights event-source show') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights event source associated with the specified environment.')
-
-    with self.argument_context('timeseriesinsights event-source list') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
     # endregion
 
     # region reference-data-set

@@ -181,7 +181,7 @@ class EventSourcesOperations(object):
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.TimeSeriesInsights/environments/{environmentName}/eventSources/{eventSourceName}'}
 
     def update(
-            self, resource_group_name, environment_name, event_source_name, tags=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, environment_name, event_source_name, parameters, custom_headers=None, raw=False, **operation_config):
         """Updates the event source with the specified name in the specified
         subscription, resource group, and environment.
 
@@ -206,7 +206,7 @@ class EventSourcesOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        event_source_update_parameters = models.EventSourceUpdateParameters(tags=tags)
+        event_source_update_parameters = parameters
 
         # Construct URL
         url = self.update.metadata['url']
