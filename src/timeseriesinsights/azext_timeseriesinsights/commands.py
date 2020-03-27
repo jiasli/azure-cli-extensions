@@ -38,7 +38,8 @@ def load_command_table(self, _):
     with self.command_group('timeseriesinsights environment longterm', timeseriesinsights_environments, client_factory=cf_environments) as g:
         g.custom_command('create', 'create_timeseriesinsights_environment_longterm',
                          doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#LongTermEnvironmentCreateOrUpdateParameters")
-        g.custom_command('update', 'update_timeseriesinsights_environment_longterm')
+        g.custom_command('update', 'update_timeseriesinsights_environment_longterm',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#LongTermEnvironmentUpdateParameters")
 
     with self.command_group('timeseriesinsights environment', timeseriesinsights_environments, client_factory=cf_environments) as g:
         g.command('delete', 'delete')
@@ -64,7 +65,7 @@ def load_command_table(self, _):
         g.custom_command('create', 'create_timeseriesinsights_event_source_iothub',
                          doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#IoTHubEventSourceCreateOrUpdateParameters")
         g.custom_command('update', 'update_timeseriesinsights_event_source_iothub',
-                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#IoTHubEventUpdateParameters")
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#IoTHubEventSourceUpdateParameters")
 
     with self.command_group('timeseriesinsights event-source', timeseriesinsights_event_sources, client_factory=cf_event_sources) as g:
         g.command('delete', 'delete')
@@ -92,8 +93,10 @@ def load_command_table(self, _):
         operations_tmpl='azext_timeseriesinsights.vendored_sdks.timeseriesinsights.operations._access_policies_operations#AccessPoliciesOperations.{}',
         client_factory=cf_access_policies)
     with self.command_group('timeseriesinsights access-policy', timeseriesinsights_access_policies, client_factory=cf_access_policies) as g:
-        g.custom_command('create', 'create_timeseriesinsights_access_policy')
-        g.custom_command('update', 'update_timeseriesinsights_access_policy')
+        g.custom_command('create', 'create_timeseriesinsights_access_policy',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#AccessPolicyCreateOrUpdateParameters")
+        g.custom_command('update', 'update_timeseriesinsights_access_policy',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#AccessPolicyUpdateParameters")
         g.command('delete', 'delete')
         g.show_command('show', 'get')
         g.command('list', 'list_by_environment')

@@ -14,7 +14,8 @@ def list_timeseriesinsights_operation(cmd, client):
 
 
 def create_timeseriesinsights_environment_standard(cmd, client,
-                                                   resource_group, name, location,
+                                                   resource_group, environment_name,
+                                                   location,
                                                    sku_name, sku_capacity,
                                                    tags=None,
                                                    data_retention_time=None,
@@ -29,7 +30,7 @@ def create_timeseriesinsights_environment_standard(cmd, client,
         storage_limit_exceeded_behavior=storage_limit_exceeded_behavior,
         partition_key_properties=[TimeSeriesIdProperty(name=partition_key_properties, type="String")]
     )
-    return client.create_or_update(resource_group_name=resource_group, environment_name=name, parameters=parameters)
+    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, parameters=parameters)
 
 
 def update_timeseriesinsights_environment_standard(instance, cmd,
@@ -55,11 +56,9 @@ def update_timeseriesinsights_environment_standard(instance, cmd,
 
 
 def create_timeseriesinsights_environment_longterm(cmd, client,
-                                                   resource_group,
-                                                   name,
+                                                   resource_group, environment_name,
                                                    location,
-                                                   sku_name,
-                                                   sku_capacity,
+                                                   sku_name, sku_capacity,
                                                    tags=None,
                                                    time_series_id_properties=None,
                                                    storage_account_name=None,
@@ -74,11 +73,11 @@ def create_timeseriesinsights_environment_longterm(cmd, client,
         time_series_id_properties=[TimeSeriesIdProperty(name=time_series_id_properties, type="String")],
         storage_configuration=LongTermStorageConfigurationInput(account_name=storage_account_name, management_key=storage_management_key),
         data_retention=data_retention)
-    return client.create_or_update(resource_group_name=resource_group, environment_name=name, parameters=parameters)
+    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, parameters=parameters)
 
 
 def update_timeseriesinsights_environment_longterm(cmd, client,
-                                                   resource_group, name,
+                                                   resource_group, environment_name,
                                                    tags=None,
                                                    storage_management_key=None,
                                                    data_retention=None):
@@ -88,7 +87,7 @@ def update_timeseriesinsights_environment_longterm(cmd, client,
         tags=tags,
         storage_configuration=LongTermStorageConfigurationMutableProperties(management_key=storage_management_key),
         data_retention=data_retention)
-    return client.update(resource_group_name=resource_group, environment_name=name, parameters=parameters)
+    return client.update(resource_group_name=resource_group, environment_name=environment_name, parameters=parameters)
 
 
 def list_timeseriesinsights_environment(cmd, client,
@@ -121,33 +120,17 @@ def create_timeseriesinsights_event_source_eventhub(cmd, client,
 
 def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group, environment_name, event_source_name,
                                                     tags=None, timestamp_property_name=None,
-                                                    local_timestamp=None, shared_access_key=None):
+                                                    local_timestamp_format=None, time_zone_offset_property_name=None,
+                                                    shared_access_key=None):
 
-    from .vendored_sdks.timeseriesinsights.models import EventHubEventSourceUpdateParameters
+    from .vendored_sdks.timeseriesinsights.models import EventHubEventSourceUpdateParameters, LocalTimestamp, LocalTimestampTimeZoneOffset
     parameters = EventHubEventSourceUpdateParameters(tags=tags,
                                                      timestamp_property_name=timestamp_property_name,
-                                                     local_timestamp=local_timestamp,
+                                                     local_timestamp=LocalTimestamp(format=local_timestamp_format, time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name)),
                                                      shared_access_key=shared_access_key)
 
     return client.update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=event_source_name,
                          parameters=parameters)
-
-
-def update_timeseriesinsights_event_source_eventhub_generic(instance, cmd,
-                                                            tags=None, timestamp_property_name=None,
-                                                            local_timestamp=None, shared_access_key=None):
-
-    # GET-PUT doesn't work because sharedAccessKey is missing from GET output
-    with cmd.update_context(instance) as c:
-        c.set_param('tags', tags)
-        c.set_param('timestamp_property_name', timestamp_property_name)
-        c.set_param('local_timestamp', local_timestamp)
-        c.set_param('shared_access_key', shared_access_key)
-        # Need to clear provisioning_state because StandardEnvironmentResource.provisioning_state is not allowed by
-        # StandardEnvironmentCreateOrUpdateParameters
-        c.set_param('provisioning_state', '')
-        c.set_param('creation_time', '')
-    return instance
 
 
 def create_timeseriesinsights_event_source_iothub(cmd, client,
@@ -175,29 +158,17 @@ def update_timeseriesinsights_event_source_iothub(cmd, client,
                                                   environment_name,
                                                   name,
                                                   location,
-                                                  tags=None):
+                                                  tags=None, timestamp_property_name=None,
+                                                  local_timestamp_format=None, time_zone_offset_property_name=None,
+                                                  shared_access_key=None,):
+    from .vendored_sdks.timeseriesinsights.models import IoTHubEventSourceUpdateParameters, LocalTimestamp, LocalTimestampTimeZoneOffset
+    parameters = IoTHubEventSourceUpdateParameters(
+        tags=tags,
+        timestamp_property_name=timestamp_property_name,
+        local_timestamp=LocalTimestamp(format=local_timestamp_format, time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name)),
+        shared_access_key=shared_access_key
+    )
     return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name, location=location, tags=tags)
-
-
-
-def delete_timeseriesinsights_event_source(cmd, client,
-                                           resource_group,
-                                           environment_name,
-                                           name):
-    return client.delete(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name)
-
-
-def get_timeseriesinsights_event_source(cmd, client,
-                                        resource_group,
-                                        environment_name,
-                                        name):
-    return client.get(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name)
-
-
-def list_timeseriesinsights_event_source(cmd, client,
-                                         resource_group,
-                                         environment_name):
-    return client.list_by_environment(resource_group_name=resource_group, environment_name=environment_name)
 
 
 def create_timeseriesinsights_reference_data_set(cmd, client,
