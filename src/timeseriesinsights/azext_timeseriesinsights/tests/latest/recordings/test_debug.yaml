@@ -1,41 +1,39 @@
 interactions:
 - request:
-    body: '{"properties": {"principalObjectId": "001", "description": "some description",
-      "roles": ["Reader"]}}'
+    body: null
     headers:
       Accept:
       - application/json
       Accept-Encoding:
       - gzip, deflate
       CommandName:
-      - timeseriesinsights access-policy create
+      - iot hub policy list
       Connection:
       - keep-alive
       Content-Length:
-      - '100'
-      Content-Type:
-      - application/json; charset=utf-8
+      - '0'
       ParameterSetName:
-      - -g --environment-name --name --principal-object-id --description --roles
+      - -g --hub-name
       User-Agent:
       - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.2.0
+        azure-mgmt-iothub/0.11.0 Azure-SDK-For-Python AZURECLI/2.3.0
       accept-language:
       - en-US
-    method: PUT
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accessPolicies/ap1?api-version=2018-08-15-preview
+    method: POST
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330/listkeys?api-version=2019-07-01-preview
   response:
     body:
-      string: '{"properties":{"principalObjectId":"001","description":"some description","roles":["Reader"]},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accesspolicies/ap1","name":"ap1","type":"Microsoft.TimeSeriesInsights/Environments/AccessPolicies"}'
+      string: '{"value":[{"keyName":"iothubowner","primaryKey":"chkjyUT38Q3bVKG9uHoxQd5OcDWHSOBcy21L+w4f9Ps=","secondaryKey":"ZOIWtXfwRvD8Ce1byqhiLS15KFdAy4p/EeqJsvSybQs=","rights":"RegistryWrite,
+        ServiceConnect, DeviceConnect"},{"keyName":"service","primaryKey":"r+en2QaDeQ1nIsM/0Dep94/gToFoa7Ic7g5coK4vcJE=","secondaryKey":"4c4bea5NcTS7FXFdQ+8ZeaiIiv2RSqIgrkyvXX9GEY4=","rights":"ServiceConnect"},{"keyName":"device","primaryKey":"gb+wBn3vuwJ/Fva+7HKi6KJ1HTGuJ8kFbZ5n0gUd2i4=","secondaryKey":"+LVgppi8usQq8fBvkP9gPg9YnqecDozT4MAJoj9Dkqw=","rights":"DeviceConnect"},{"keyName":"registryRead","primaryKey":"17y+3Ni8UYsJY/rW2JKloaiwEKHE5Wm2WOn0hnpe4UY=","secondaryKey":"Fc7jTq2LXoJ6sHMHtazcQgMEK+Ok18VGDc/WJ2Gn24Y=","rights":"RegistryRead"},{"keyName":"registryReadWrite","primaryKey":"7sx6aTgfMxCS25VlxT8Ibr3AVoo1M3LfOojPM1THwi0=","secondaryKey":"HfVe7T1smpB/W3Phh+w9mRqdc08KKvdCBHpdkvZwaN0=","rights":"RegistryWrite"}]}'
     headers:
       cache-control:
       - no-cache
       content-length:
-      - '328'
+      - '905'
       content-type:
-      - application/json
+      - application/json; charset=utf-8
       date:
-      - Fri, 20 Mar 2020 09:38:01 GMT
+      - Mon, 30 Mar 2020 10:53:21 GMT
       expires:
       - '-1'
       pragma:
@@ -56,37 +54,46 @@ interactions:
       code: 200
       message: OK
 - request:
-    body: null
+    body: '{"location": "westus", "kind": "Microsoft.IoTHub", "properties": {"timestampPropertyName":
+      "DeviceId", "eventSourceResourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330",
+      "iotHubName": "jliothub0330", "consumerGroupName": "$Default", "keyName": "iothubowner",
+      "sharedAccessKey": "chkjyUT38Q3bVKG9uHoxQd5OcDWHSOBcy21L+w4f9Ps="}}'
     headers:
       Accept:
       - application/json
       Accept-Encoding:
       - gzip, deflate
       CommandName:
-      - timeseriesinsights access-policy show
+      - timeseriesinsights event-source iothub create
       Connection:
       - keep-alive
+      Content-Length:
+      - '408'
+      Content-Type:
+      - application/json; charset=utf-8
       ParameterSetName:
-      - -g --environment-name --name
+      - -g --environment-name --name --location --iot-hub-name --consumer-group-name
+        --key-name --shared-access-key --event-source-resource-id --timestamp-property-name
       User-Agent:
       - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.2.0
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
       accept-language:
       - en-US
-    method: GET
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accessPolicies/ap1?api-version=2018-08-15-preview
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventSources/es2?api-version=2018-08-15-preview
   response:
     body:
-      string: '{"properties":{"principalObjectId":"001","description":"some description","roles":["Reader"]},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accesspolicies/ap1","name":"ap1","type":"Microsoft.TimeSeriesInsights/Environments/AccessPolicies"}'
+      string: '{"kind":"Microsoft.IoTHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330","iotHubName":"jliothub0330","consumerGroupName":"$Default","keyName":"iothubowner","creationTime":"Mon,
+        30 Mar 2020 10:39:44 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventsources/es2","name":"es2","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
     headers:
       cache-control:
       - no-cache
       content-length:
-      - '328'
+      - '648'
       content-type:
       - application/json
       date:
-      - Fri, 20 Mar 2020 09:38:05 GMT
+      - Mon, 30 Mar 2020 10:54:09 GMT
       expires:
       - '-1'
       pragma:
@@ -101,6 +108,8 @@ interactions:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1198'
     status:
       code: 200
       message: OK
@@ -112,31 +121,32 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       CommandName:
-      - timeseriesinsights access-policy list
+      - timeseriesinsights event-source list
       Connection:
       - keep-alive
       ParameterSetName:
       - -g --environment-name
       User-Agent:
       - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.2.0
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
       accept-language:
       - en-US
     method: GET
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accessPolicies?api-version=2018-08-15-preview
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventSources?api-version=2018-08-15-preview
   response:
     body:
-      string: '{"value":[{"properties":{"principalObjectId":"001","description":"some
-        description","roles":["Reader"]},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accesspolicies/ap1","name":"ap1","type":"Microsoft.TimeSeriesInsights/Environments/AccessPolicies"}]}'
+      string: '{"value":[{"kind":"Microsoft.IoTHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330","iotHubName":"jliothub0330","consumerGroupName":"$Default","keyName":"iothubowner","creationTime":"Mon,
+        30 Mar 2020 10:39:44 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventsources/es2","name":"es2","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"},{"kind":"Microsoft.IoTHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330","iotHubName":"jliothub0330","consumerGroupName":"$Default","keyName":"iothubowner","creationTime":"Mon,
+        30 Mar 2020 10:40:43 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventsources/jles2","name":"jles2","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}]}'
     headers:
       cache-control:
       - no-cache
       content-length:
-      - '340'
+      - '1313'
       content-type:
       - application/json
       date:
-      - Fri, 20 Mar 2020 09:38:12 GMT
+      - Mon, 30 Mar 2020 10:54:14 GMT
       expires:
       - '-1'
       pragma:
@@ -151,118 +161,6 @@ interactions:
       - Accept-Encoding
       x-content-type-options:
       - nosniff
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"properties": {"description": "some description updated"}}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      CommandName:
-      - timeseriesinsights access-policy update
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '59'
-      Content-Type:
-      - application/json; charset=utf-8
-      ParameterSetName:
-      - -g --environment-name --name --description
-      User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.2.0
-      accept-language:
-      - en-US
-    method: PATCH
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accessPolicies/ap1?api-version=2018-08-15-preview
-  response:
-    body:
-      string: '{"properties":{"principalObjectId":"001","description":"some description
-        updated","roles":["Reader"]},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accesspolicies/ap1","name":"ap1","type":"Microsoft.TimeSeriesInsights/Environments/AccessPolicies"}'
-    headers:
-      cache-control:
-      - no-cache
-      content-length:
-      - '336'
-      content-type:
-      - application/json
-      date:
-      - Fri, 20 Mar 2020 09:38:14 GMT
-      expires:
-      - '-1'
-      pragma:
-      - no-cache
-      server:
-      - Microsoft-HTTPAPI/2.0
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-ms-ratelimit-remaining-subscription-writes:
-      - '1198'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: '{"properties": {"roles": ["Contributor"]}}'
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      CommandName:
-      - timeseriesinsights access-policy update
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '42'
-      Content-Type:
-      - application/json; charset=utf-8
-      ParameterSetName:
-      - -g --environment-name --name --roles
-      User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.2.0
-      accept-language:
-      - en-US
-    method: PATCH
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accessPolicies/ap1?api-version=2018-08-15-preview
-  response:
-    body:
-      string: '{"properties":{"principalObjectId":"001","description":"some description
-        updated","roles":["Contributor"]},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accesspolicies/ap1","name":"ap1","type":"Microsoft.TimeSeriesInsights/Environments/AccessPolicies"}'
-    headers:
-      cache-control:
-      - no-cache
-      content-length:
-      - '341'
-      content-type:
-      - application/json
-      date:
-      - Fri, 20 Mar 2020 09:38:17 GMT
-      expires:
-      - '-1'
-      pragma:
-      - no-cache
-      server:
-      - Microsoft-HTTPAPI/2.0
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-ms-ratelimit-remaining-subscription-writes:
-      - '1198'
     status:
       code: 200
       message: OK
@@ -274,20 +172,70 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       CommandName:
-      - timeseriesinsights access-policy delete
+      - timeseriesinsights event-source show
+      Connection:
+      - keep-alive
+      ParameterSetName:
+      - -g --environment-name -n
+      User-Agent:
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      accept-language:
+      - en-US
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventSources/es2?api-version=2018-08-15-preview
+  response:
+    body:
+      string: '{"kind":"Microsoft.IoTHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330","iotHubName":"jliothub0330","consumerGroupName":"$Default","keyName":"iothubowner","creationTime":"Mon,
+        30 Mar 2020 10:39:44 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventsources/es2","name":"es2","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '648'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Mar 2020 10:54:18 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      CommandName:
+      - timeseriesinsights event-source delete
       Connection:
       - keep-alive
       Content-Length:
       - '0'
       ParameterSetName:
-      - -g --environment-name --name
+      - -g --environment-name -n
       User-Agent:
       - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.2.0
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
       accept-language:
       - en-US
     method: DELETE
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/accessPolicies/ap1?api-version=2018-08-15-preview
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/jlrg/providers/Microsoft.TimeSeriesInsights/environments/env1/eventSources/es2?api-version=2018-08-15-preview
   response:
     body:
       string: ''
@@ -297,7 +245,7 @@ interactions:
       content-length:
       - '0'
       date:
-      - Fri, 20 Mar 2020 09:38:20 GMT
+      - Mon, 30 Mar 2020 10:54:25 GMT
       expires:
       - '-1'
       pragma:
@@ -309,7 +257,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-ms-ratelimit-remaining-subscription-deletes:
-      - '14999'
+      - '14998'
     status:
       code: 200
       message: OK

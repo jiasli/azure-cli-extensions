@@ -24,7 +24,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         return self.cmd('az timeseriesinsights environment standard create '
                         '--resource-group {rg} '
                         '--name "{env}" '
-                        '--location "westus" '
+                        '--location {loc} '
                         '--sku-name "S1" '
                         '--sku-capacity "1" '
                         '--data-retention-time "P31D" '
@@ -89,11 +89,118 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
                  '--name "env2"',
                  checks=[])
 
-    def test_debug(self):
+    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
+    def test_timeseriesinsights_eventsource_eventhub(self, resource_group):
+        self.kwargs.update({
+            'es': self.create_random_name('cli-test-tsi-es', 24),  # time series insights event source
+            'ehns': self.create_random_name('cli-test-tsi-ehns', 24),  # event hub namespace
+            'eh': self.create_random_name('cli-test-tsi-eh', 24),  # event hub
+            'loc': 'westus'
+        })
+
         self._create_timeseriesinsights_environment()
+
+        # Create
+
+        # Prepare the event hub
+        self.cmd('az eventhubs namespace create -g {rg} -n {ehns}')
+        result = self.cmd('az eventhubs eventhub create -g {rg} -n {eh} --namespace-name {ehns}').get_output_in_json()
+        self.kwargs["es_resource_id"] = result["id"]
+        result = self.cmd('az eventhubs namespace authorization-rule keys list -g {rg} --namespace-name {ehns} -n RootManageSharedAccessKey').get_output_in_json()
+        self.kwargs["shared-access-key"] = result["primaryKey"]
+
+        self.cmd('az timeseriesinsights event-source eventhub create -g {rg} --environment-name {env} --name {es} --location westus '
+                 '--service-bus-namespace {ehns} --event-hub-name {eh} --key-name RootManageSharedAccessKey '
+                 '--shared-access-key {shared-access-key} '
+                 '--event-source-resource-id {es_resource_id} '
+                 '--consumer-group-name $Default --timestamp-property-name DeviceId')
+
+        # List
+        self.cmd('az timeseriesinsights event-source list -g {rg} --environment-name {env}',
+                 checks=[self.check('length(@)', 1)])
+
+        # Show
+        self.cmd('az timeseriesinsights event-source show -g {rg} --environment-name {env} -n {es}')
+
+        # Delete
+        self.cmd('az timeseriesinsights event-source delete -g {rg} --environment-name {env} -n {es}')
+
+    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
+    def test_timeseriesinsights_eventsource_iothub(self):
+        self.kwargs.update({
+            'es': self.create_random_name('cli-test-tsi-es', 24),  # time series insights event source
+            'iothub': self.create_random_name('cli-test-tsi-iothub', 24),  # iot hub
+            'loc': 'westus'
+        })
+
+        self._create_timeseriesinsights_environment()
+
+        # Create
+
+        # Prepare the iot hub
+        result = self.cmd('az iot hub create -g {rg} -n {iothub}').get_output_in_json()
+        self.kwargs["es_resource_id"] = result["id"]
+        result = self.cmd('az iot hub policy list -g {rg} --hub-name {iothub}').get_output_in_json()
+        self.kwargs["key-name"] = result[0]["keyName"]
+        self.kwargs["shared-access-key"] = result[0]["primaryKey"]
+
+        self.cmd('az timeseriesinsights event-source iothub create -g {rg} --environment-name {env} --name {es} '
+                 '--location {loc} '
+                 '--iot-hub-name {iothub} --consumer-group-name $Default '
+                 '--key-name {key-name} --shared-access-key {shared-access-key} '
+                 '--event-source-resource-id {es_resource_id} --timestamp-property-name DeviceId')
+
+        # List
+        self.cmd('az timeseriesinsights event-source list -g {rg} --environment-name {env}',
+                 checks=[self.check('length(@)', 1)])
+
+        # Show
+        self.cmd('az timeseriesinsights event-source show -g {rg} --environment-name {env} -n {es}')
+
+        # Delete
+        self.cmd('az timeseriesinsights event-source delete -g {rg} --environment-name {env} -n {es}')
+
+
+    def test_debug(self):
+        self.kwargs.update({
+            'env': 'env1',
+            'es': 'es2',  # time series insights event source
+            'ih': 'jliothub0330',  # iot hub
+            'loc': 'westus',
+            'rg': 'jlrg'
+        })
+        # Create
+
+        # Prepare the iot hub
+        # result = self.cmd('az iot hub create -g {rg} -n {ih}').get_output_in_json()
+        # self.kwargs["es_resource_id"] = result["id"]
+        self.kwargs["es_resource_id"] = '/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330'
+        result = self.cmd('az iot hub policy list -g {rg} --hub-name {ih}').get_output_in_json()
+        self.kwargs["key-name"] = result[0]["keyName"]
+        self.kwargs["shared-access-key"] = result[0]["primaryKey"]
+
+        self.cmd('az timeseriesinsights event-source iothub create -g {rg} --environment-name {env} --name {es} '
+                 '--location {loc} '
+                 '--iot-hub-name jliothub0330 --consumer-group-name $Default '
+                 '--key-name {key-name} --shared-access-key {shared-access-key} '
+                 '--event-source-resource-id {es_resource_id} --timestamp-property-name DeviceId')
+
+        # List
+        self.cmd('az timeseriesinsights event-source list -g {rg} --environment-name {env}',
+                 checks=[self.check('length(@)', 1)])
+
+        # Show
+        self.cmd('az timeseriesinsights event-source show -g {rg} --environment-name {env} -n {es}')
+
+        # Delete
+        self.cmd('az timeseriesinsights event-source delete -g {rg} --environment-name {env} -n {es}')
+
 
     @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
     def test_timeseriesinsights_access_policy(self):
+        self.kwargs.update({
+            'loc': 'westus'
+        })
 
         self._create_timeseriesinsights_environment()
 
