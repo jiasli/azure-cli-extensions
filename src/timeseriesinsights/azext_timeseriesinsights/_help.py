@@ -149,7 +149,7 @@ helps['timeseriesinsights reference-data-set create'] = """
       - name: ReferenceDataSetsCreate
         text: |-
                az timeseriesinsights reference-data-set create --resource-group "rg1" --environment-name \\
-               "env1" --name "rds1" --location "West US"
+               "env1" --name "rds1" --location "West US" --key-properties DeviceId1 String DeviceFloor Double
 """
 
 helps['timeseriesinsights reference-data-set update'] = """

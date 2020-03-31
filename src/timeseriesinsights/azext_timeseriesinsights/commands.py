@@ -80,11 +80,12 @@ def load_command_table(self, _):
         client_factory=cf_reference_data_sets)
 
     with self.command_group('timeseriesinsights reference-data-set', timeseriesinsights_reference_data_sets, client_factory=cf_reference_data_sets) as g:
-        g.custom_command('create', 'create_timeseriesinsights_reference_data_set')
+        g.custom_command('create', 'create_timeseriesinsights_reference_data_set',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#ReferenceDataSetCreateOrUpdateParameters")
         g.custom_command('update', 'update_timeseriesinsights_reference_data_set')
-        g.custom_command('delete', 'delete_timeseriesinsights_reference_data_set')
-        g.custom_show_command('show', 'get_timeseriesinsights_reference_data_set')
-        g.custom_command('list', 'list_timeseriesinsights_reference_data_set')
+        g.command('delete', 'delete')
+        g.show_command('show', 'get')
+        g.command('list', 'list_by_environment')
     # endregion
 
     # region access-policy

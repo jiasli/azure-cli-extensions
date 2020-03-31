@@ -15,6 +15,9 @@ from azure.cli.core.commands.parameters import (
 )
 from azext_timeseriesinsights.action import TimeSeriesIdPropertyAction
 
+from knack.arguments import CLIArgumentType
+
+environment_name_type = CLIArgumentType(help='The name of the Time Series Insights environment associated with the specified resource group.')
 
 def load_arguments(self, _):
 
@@ -23,6 +26,7 @@ def load_arguments(self, _):
 
     with self.argument_context('timeseriesinsights') as c:
         c.argument('resource_group', resource_group_name_type)
+        c.argument('tags', tags_type)
 
     # region environment
     with self.argument_context('timeseriesinsights environment') as c:
@@ -30,7 +34,6 @@ def load_arguments(self, _):
         c.argument('resource_group', resource_group_name_type)
         c.argument('environment_name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
         c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('tags', tags_type)
         c.argument('sku_name', arg_group="SKU", arg_type=get_enum_type(SkuName), help='The sku determines the type of environment, either standard (S1 or S2) or long-term (L1). For standard environments the sku determines the capacity of the environment, the ingress rate, and the billing rate.')
         c.argument('sku_capacity', arg_group="SKU", help='The capacity of the sku. For standard environments, this value can be changed to support scale out of environments after they have been created.')
 
@@ -48,7 +51,7 @@ def load_arguments(self, _):
     # region event-source
     with self.argument_context('timeseriesinsights event-source') as c:
         from .vendored_sdks.timeseriesinsights.models import LocalTimestampFormat
-        c.argument('environment_name', help='The name of the Time Series Insights environment associated with the specified resource group.')
+        c.argument('environment_name', arg_type=environment_name_type)
         c.argument('event_source_name', arg_type=name_type, help='The name of the Time Series Insights event source associated with the specified environment.')
 
     # timeseriesinsights event-source eventhub update
@@ -59,47 +62,23 @@ def load_arguments(self, _):
     # endregion
 
     # region reference-data-set
+    with self.argument_context('timeseriesinsights reference-data-set') as c:
+        c.argument('environment_name', arg_type=environment_name_type)
+        c.argument('reference_data_set_name', arg_type=name_type, help='Name of the reference data set.')
+
     with self.argument_context('timeseriesinsights reference-data-set create') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights reference data set associated with the specified environment.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('tags', tags_type)
-        c.argument('key_properties', id_part=None, help='The list of key properties for the reference data set.', action=TimeSeriesIdPropertyAction, nargs='+')
-        c.argument('data_string_comparison_behavior', arg_type=get_enum_type(['Ordinal', 'OrdinalIgnoreCase']), id_part=None, help='The reference data set key comparison behavior can be set using this property. By default, the value is \'Ordinal\' - which means case sensitive key comparison will be performed while joining reference data with events or while adding new reference data. When \'OrdinalIgnoreCase\' is set, case insensitive comparison will be used.')
-
-    with self.argument_context('timeseriesinsights reference-data-set update') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights reference data set associated with the specified environment.')
-        c.argument('location', arg_type=get_location_type(self.cli_ctx))
-        c.argument('tags', tags_type)
-        c.argument('key_properties', id_part=None, help='The list of key properties for the reference data set.', action=TimeSeriesIdPropertyAction, nargs='+')
-        c.argument('data_string_comparison_behavior', arg_type=get_enum_type(['Ordinal', 'OrdinalIgnoreCase']), id_part=None, help='The reference data set key comparison behavior can be set using this property. By default, the value is \'Ordinal\' - which means case sensitive key comparison will be performed while joining reference data with events or while adding new reference data. When \'OrdinalIgnoreCase\' is set, case insensitive comparison will be used.')
-
-    with self.argument_context('timeseriesinsights reference-data-set delete') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights reference data set associated with the specified environment.')
-
-    with self.argument_context('timeseriesinsights reference-data-set show') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
-        c.argument('name', id_part=None, help='The name of the Time Series Insights reference data set associated with the specified environment.')
-
-    with self.argument_context('timeseriesinsights reference-data-set list') as c:
-        c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
+        from .vendored_sdks.timeseriesinsights.models import DataStringComparisonBehavior
+        c.argument('key_properties', nargs='+', help='The list of key properties for the reference data set. Format: [NAME TYPE] ...')
+        c.argument('data_string_comparison_behavior', arg_type=get_enum_type(DataStringComparisonBehavior))
     # endregion
 
     # region access-policy
     with self.argument_context('timeseriesinsights access-policy') as c:
         from .vendored_sdks.timeseriesinsights.models import AccessPolicyRole
         c.argument('resource_group', resource_group_name_type)
-        c.argument('environment_name', id_part=None, help='The name of the Time Series Insights environment associated with the specified resource group.')
+        c.argument('environment_name', arg_type=environment_name_type)
         c.argument('access_policy_name', arg_type=name_type, id_part=None, help='The name of the Time Series Insights access policy associated with the specified environment.')
         c.argument('principal_object_id', help='The objectId of the principal in Azure Active Directory.')
         c.argument('description', help='An description of the access policy.')
         c.argument('roles', arg_type=get_enum_type(AccessPolicyRole), nargs='+')
-
     # endregion

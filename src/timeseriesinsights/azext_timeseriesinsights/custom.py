@@ -172,59 +172,36 @@ def update_timeseriesinsights_event_source_iothub(cmd, client,
 
 
 def create_timeseriesinsights_reference_data_set(cmd, client,
-                                                 resource_group,
-                                                 environment_name,
-                                                 name,
+                                                 resource_group, environment_name, reference_data_set_name,
                                                  location,
-                                                 key_properties,
-                                                 tags=None,
-                                                 data_string_comparison_behavior=None):
-    body = {}
-    body['location'] = location  # str
-    body['tags'] = tags  # dictionary
-    body['key_properties'] = key_properties
-    body['data_string_comparison_behavior'] = data_string_comparison_behavior  # str
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=name, parameters=body)
+                                                 key_properties, data_string_comparison_behavior,
+                                                 tags=None,):
+    from .vendored_sdks.timeseriesinsights.models import ReferenceDataSetCreateOrUpdateParameters, ReferenceDataSetKeyProperty
+
+    key_properties_list = []
+    key_property_count, remaining = divmod(len(key_properties), 2)
+    if remaining:
+        from knack.util import CLIError
+        raise CLIError("Usage error: --key-properties [NAME TYPE] ...")
+
+    for i in range(0, key_property_count):
+        # eg. --key-properties DeviceId1 String DeviceFloor Double
+        key_properties_list.append(ReferenceDataSetKeyProperty(name=key_properties[i * 2], type=key_properties[i * 2 + 1]))
+
+    parameters = ReferenceDataSetCreateOrUpdateParameters(
+        location=location,
+        tags=tags,
+        key_properties=key_properties_list,
+        data_string_comparison_behavior=data_string_comparison_behavior
+    )
+
+    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=reference_data_set_name, parameters=parameters)
 
 
 def update_timeseriesinsights_reference_data_set(cmd, client,
-                                                 resource_group,
-                                                 environment_name,
-                                                 name,
-                                                 location=None,
-                                                 tags=None,
-                                                 key_properties=None,
-                                                 data_string_comparison_behavior=None):
-    body = {}
-    if location is not None:
-        body['location'] = location  # str
-    if tags is not None:
-        body['tags'] = tags  # dictionary
-    if key_properties is not None:
-        body['key_properties'] = key_properties
-    if data_string_comparison_behavior is not None:
-        body['data_string_comparison_behavior'] = data_string_comparison_behavior  # str
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=name, parameters=body)
-
-
-def delete_timeseriesinsights_reference_data_set(cmd, client,
-                                                 resource_group,
-                                                 environment_name,
-                                                 name):
-    return client.delete(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=name)
-
-
-def get_timeseriesinsights_reference_data_set(cmd, client,
-                                              resource_group,
-                                              environment_name,
-                                              name):
-    return client.get(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=name)
-
-
-def list_timeseriesinsights_reference_data_set(cmd, client,
-                                               resource_group,
-                                               environment_name):
-    return client.list_by_environment(resource_group_name=resource_group, environment_name=environment_name)
+                                                 resource_group, environment_name, reference_data_set_name,
+                                                 tags=None):
+    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=reference_data_set_name, tags=tags)
 
 
 def create_timeseriesinsights_access_policy(cmd, client,

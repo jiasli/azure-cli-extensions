@@ -90,7 +90,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
                  checks=[])
 
     @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
-    def test_timeseriesinsights_eventsource_eventhub(self, resource_group):
+    def test_timeseriesinsights_event_source_eventhub(self, resource_group):
         self.kwargs.update({
             'es': self.create_random_name('cli-test-tsi-es', 24),  # time series insights event source
             'ehns': self.create_random_name('cli-test-tsi-ehns', 24),  # event hub namespace
@@ -126,7 +126,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.cmd('az timeseriesinsights event-source delete -g {rg} --environment-name {env} -n {es}')
 
     @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
-    def test_timeseriesinsights_eventsource_iothub(self):
+    def test_timeseriesinsights_event_source_iothub(self):
         self.kwargs.update({
             'es': self.create_random_name('cli-test-tsi-es', 24),  # time series insights event source
             'iothub': self.create_random_name('cli-test-tsi-iothub', 24),  # iot hub
@@ -136,7 +136,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self._create_timeseriesinsights_environment()
 
         # Create
-
         # Prepare the iot hub
         result = self.cmd('az iot hub create -g {rg} -n {iothub}').get_output_in_json()
         self.kwargs["es_resource_id"] = result["id"]
@@ -160,41 +159,29 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         # Delete
         self.cmd('az timeseriesinsights event-source delete -g {rg} --environment-name {env} -n {es}')
 
-
-    def test_debug(self):
+    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
+    def test_timeseriesinsights_reference_data_set(self):
         self.kwargs.update({
-            'env': 'env1',
-            'es': 'es2',  # time series insights event source
-            'ih': 'jliothub0330',  # iot hub
+            'rds': self.create_random_name('clitesttsirds', 24),  # time series insights event source
             'loc': 'westus',
-            'rg': 'jlrg'
         })
+
+        self._create_timeseriesinsights_environment()
+
         # Create
-
-        # Prepare the iot hub
-        # result = self.cmd('az iot hub create -g {rg} -n {ih}').get_output_in_json()
-        # self.kwargs["es_resource_id"] = result["id"]
-        self.kwargs["es_resource_id"] = '/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/jlrg/providers/Microsoft.Devices/IotHubs/jliothub0330'
-        result = self.cmd('az iot hub policy list -g {rg} --hub-name {ih}').get_output_in_json()
-        self.kwargs["key-name"] = result[0]["keyName"]
-        self.kwargs["shared-access-key"] = result[0]["primaryKey"]
-
-        self.cmd('az timeseriesinsights event-source iothub create -g {rg} --environment-name {env} --name {es} '
-                 '--location {loc} '
-                 '--iot-hub-name jliothub0330 --consumer-group-name $Default '
-                 '--key-name {key-name} --shared-access-key {shared-access-key} '
-                 '--event-source-resource-id {es_resource_id} --timestamp-property-name DeviceId')
+        self.cmd('az timeseriesinsights reference-data-set create -g {rg} --environment-name {env} --name {rds} '
+                 '-l {loc} '
+                 '--key-properties DeviceId1 String DeviceFloor Double --data-string-comparison-behavior Ordinal')
 
         # List
-        self.cmd('az timeseriesinsights event-source list -g {rg} --environment-name {env}',
+        self.cmd('az timeseriesinsights reference-data-set list -g {rg} --environment-name {env}',
                  checks=[self.check('length(@)', 1)])
 
         # Show
-        self.cmd('az timeseriesinsights event-source show -g {rg} --environment-name {env} -n {es}')
+        self.cmd('az timeseriesinsights reference-data-set show -g {rg} --environment-name {env} -n {rds}')
 
         # Delete
-        self.cmd('az timeseriesinsights event-source delete -g {rg} --environment-name {env} -n {es}')
-
+        self.cmd('az timeseriesinsights reference-data-set delete -g {rg} --environment-name {env} -n {rds}')
 
     @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
     def test_timeseriesinsights_access_policy(self):
@@ -205,14 +192,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self._create_timeseriesinsights_environment()
 
         # Create
-        self.cmd('az timeseriesinsights access-policy create -g {rg} --environment-name {env} --name ap1 --principal-object-id 001 --description "some description" --roles Reader',
-                 checks=[])
-
-        # Show
-        self.cmd('az timeseriesinsights access-policy show -g {rg} --environment-name {env} --name ap1',
-                 checks=[])
-        # List
-        self.cmd('az timeseriesinsights access-policy list -g {rg} --environment-name {env}',
+        self.cmd('az timeseriesinsights access-policy create -g {rg} --environment-name {env} --name ap1 --principal-object-id 001 --description "some description" --roles Contributor Reader',
                  checks=[])
 
         # Update
@@ -222,118 +202,37 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.cmd('az timeseriesinsights access-policy update -g {rg} --environment-name {env} --name ap1 --roles Contributor',
                  checks=[])
 
+        # Show
+        self.cmd('az timeseriesinsights access-policy show -g {rg} --environment-name {env} --name ap1',
+                 checks=[])
+        # List
+        self.cmd('az timeseriesinsights access-policy list -g {rg} --environment-name {env}',
+                 checks=[self.check('length(@)', 1)])
+
         # Delete
         self.cmd('az timeseriesinsights access-policy delete -g {rg} --environment-name {env} --name ap1',
                  checks=[])
 
-    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
-    def test_timeseriesinsights_other(self, resource_group):
+    @unittest.skip('We have to skip this as the service/SDK is buggy.')
+    def test_debug(self):
+        self.kwargs.update({
+            'rds': 'rds1',
+            'env': 'env1',
+            'loc': 'westus',
+            'rg': 'jlrg'
+        })
 
-        self.cmd('az timeseriesinsights event-source create '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "es1" '
-                 '--location "West US"',
-                 checks=[])
+        # Create
+        self.cmd('az timeseriesinsights reference-data-set create -g {rg} --environment-name {env} --name {rds} '
+                 '-l {loc} '
+                 '--key-properties DeviceId1 String DeviceFloor Double --data-string-comparison-behavior Ordinal')
 
-        self.cmd('az timeseriesinsights access-policy create '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "ap1" '
-                 '--description "some description" '
-                 '--roles "Reader"',
-                 checks=[])
+        # List
+        self.cmd('az timeseriesinsights reference-data-set list -g {rg} --environment-name {env}',
+                 checks=[self.check('length(@)', 1)])
 
-        self.cmd('az timeseriesinsights reference-data-set create '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "rds1" '
-                 '--location "West US"',
-                 checks=[])
+        # Show
+        self.cmd('az timeseriesinsights reference-data-set show -g {rg} --environment-name {env} -n {rds}')
 
-        self.cmd('az timeseriesinsights reference-data-set show '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "rds1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights access-policy show '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "ap1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights event-source show '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "es1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights reference-data-set list '
-                 '--resource-group {rg} '
-                 '--environment-name "env1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights access-policy list '
-                 '--resource-group {rg} '
-                 '--environment-name "env1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights event-source list '
-                 '--resource-group {rg} '
-                 '--environment-name "env1"',
-                 checks=[])
-
-
-
-        self.cmd('az timeseriesinsights operation list',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights reference-data-set update '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "rds1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights access-policy update '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "ap1" '
-                 '--roles "Reader,Contributor"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights event-source update '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "es1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights environment update '
-                 '--resource-group {rg} '
-                 '--name "env1" '
-                 '--sku-name "S1" '
-                 '--sku-capacity "10"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights reference-data-set delete '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "rds1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights access-policy delete '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "ap1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights event-source delete '
-                 '--resource-group {rg} '
-                 '--environment-name "env1" '
-                 '--name "es1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights environment delete '
-                 '--resource-group {rg} '
-                 '--name "env1"',
-                 checks=[])
+        # Delete
+        self.cmd('az timeseriesinsights reference-data-set delete -g {rg} --environment-name {env} -n {rds}')
