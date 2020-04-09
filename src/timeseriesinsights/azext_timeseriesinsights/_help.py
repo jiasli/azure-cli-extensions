@@ -123,7 +123,7 @@ examples:
         az eventhubs namespace create -g $rg -n $ehns
         es_resource_id=$(az eventhubs eventhub create -g $rg -n $eh --namespace-name $ehns --query id --output tsv)
         shared_access_key=$(az eventhubs namespace authorization-rule keys list -g $rg --namespace-name $ehns -n RootManageSharedAccessKey --query primaryKey --output tsv)
-        az timeseriesinsights event-source eventhub create -g $rg --environment-name env1 --name es1 --service-bus-namespace $ehns --event-hub-name $eh --key-name RootManageSharedAccessKey --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --consumer-group-name '$Default' --timestamp-property-name DeviceId
+        az timeseriesinsights event-source eventhub create -g $rg --environment-name env1 --name es1 --key-name RootManageSharedAccessKey --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --consumer-group-name '$Default' --timestamp-property-name DeviceId
 """
 
 helps['timeseriesinsights event-source eventhub update'] = """
@@ -148,7 +148,7 @@ examples:
         iothub=iothub0409
         es_resource_id=$(az iot hub create -g $rg -n $iothub --query id --output tsv)
         shared_access_key=$(az iot hub policy list -g $rg --hub-name $iothub --query "[?keyName=='iothubowner'].primaryKey" --output tsv)
-        az timeseriesinsights event-source iothub create -g $rg --environment-name env1 --name es2 --iot-hub-name $iothub --consumer-group-name '$Default' --key-name iothubowner --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --timestamp-property-name DeviceId
+        az timeseriesinsights event-source iothub create -g $rg --environment-name env1 --name es2 --consumer-group-name '$Default' --key-name iothubowner --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --timestamp-property-name DeviceId
 """
 
 helps['timeseriesinsights event-source iothub update'] = """

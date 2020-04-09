@@ -96,16 +96,17 @@ def list_timeseriesinsights_environment(cmd, client, resource_group_name=None):
 def create_timeseriesinsights_event_source_eventhub(cmd, client,
                                                     resource_group_name, environment_name, event_source_name,
                                                     timestamp_property_name, event_source_resource_id,
-                                                    service_bus_namespace, event_hub_name,
                                                     consumer_group_name, key_name, shared_access_key,
                                                     location=None, tags=None):
     from azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models import EventHubEventSourceCreateOrUpdateParameters
+    from msrestazure.tools import parse_resource_id
+    parsed_id = parse_resource_id(event_source_resource_id)
     parameters = EventHubEventSourceCreateOrUpdateParameters(
         location=location,
         timestamp_property_name=timestamp_property_name,
         event_source_resource_id=event_source_resource_id,
-        service_bus_namespace=service_bus_namespace,
-        event_hub_name=event_hub_name,
+        service_bus_namespace=parsed_id['name'],
+        event_hub_name=parsed_id['child_name_1'],
         consumer_group_name=consumer_group_name,
         key_name=key_name,
         shared_access_key=shared_access_key,
@@ -135,15 +136,17 @@ def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group_
 def create_timeseriesinsights_event_source_iothub(cmd, client,
                                                   resource_group_name, environment_name, event_source_name,
                                                   timestamp_property_name, event_source_resource_id,
-                                                  iot_hub_name,consumer_group_name, key_name, shared_access_key,
+                                                  consumer_group_name, key_name, shared_access_key,
                                                   location=None, tags=None):
     from .vendored_sdks.timeseriesinsights.models import IoTHubEventSourceCreateOrUpdateParameters
+    from msrestazure.tools import parse_resource_id
+    parsed_id = parse_resource_id(event_source_resource_id)
     parameters = IoTHubEventSourceCreateOrUpdateParameters(
         location=location,
         tags=tags,
         timestamp_property_name=timestamp_property_name,
         event_source_resource_id=event_source_resource_id,
-        iot_hub_name=iot_hub_name,
+        iot_hub_name=parsed_id['name'],
         consumer_group_name=consumer_group_name,
         key_name=key_name,
         shared_access_key=shared_access_key)

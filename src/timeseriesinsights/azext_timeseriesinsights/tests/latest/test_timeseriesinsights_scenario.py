@@ -128,7 +128,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.kwargs["shared_access_key"] = result["primaryKey"]
 
         self.cmd('az timeseriesinsights event-source eventhub create -g {rg} --environment-name {env} --name {es} '
-                 '--service-bus-namespace {ehns} --event-hub-name {eh} --key-name RootManageSharedAccessKey '
+                 '--key-name RootManageSharedAccessKey '
                  '--shared-access-key {shared_access_key} '
                  '--event-source-resource-id {es_resource_id} '
                  '--consumer-group-name $Default --timestamp-property-name DeviceId')
@@ -173,7 +173,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.kwargs["shared_access_key"] = self.cmd("az iot hub policy list -g {rg} --hub-name {iothub} --query \"[?keyName=='iothubowner']\".primaryKey --output tsv").output
 
         self.cmd('az timeseriesinsights event-source iothub create -g {rg} --environment-name {env} --name {es} '
-                 '--iot-hub-name {iothub} --consumer-group-name $Default '
+                 '--consumer-group-name $Default '
                  '--key-name {key_name} --shared-access-key {shared_access_key} '
                  '--event-source-resource-id {es_resource_id} --timestamp-property-name DeviceId')
 
