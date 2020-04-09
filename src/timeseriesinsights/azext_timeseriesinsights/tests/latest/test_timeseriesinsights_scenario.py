@@ -24,7 +24,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         return self.cmd('az timeseriesinsights environment standard create '
                         '--resource-group {rg} '
                         '--name {env} '
-                        '--location {loc} '
                         '--sku-name S1 '
                         '--sku-capacity 1 '
                         '--data-retention-time 31 '
@@ -41,7 +40,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.cmd('az timeseriesinsights environment standard create '
                  '--resource-group {rg} '
                  '--name {env} '
-                 '--location westus '
                  '--sku-name S1 '
                  '--sku-capacity 1 '
                  '--data-retention-time 7 '
@@ -93,7 +91,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.cmd('az timeseriesinsights environment longterm create '
                  '--resource-group {rg} '
                  '--name {env} '
-                 '--location westus '
                  '--sku-name L1 '
                  '--sku-capacity 1 '
                  '--data-retention 7 '
@@ -183,7 +180,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
     def test_timeseriesinsights_reference_data_set(self):
         self.kwargs.update({
             'rds': self.create_random_name('clitesttsirds', 24),  # time series insights event source
-            'loc': 'westus',
         })
 
         self._create_timeseriesinsights_environment()
@@ -205,7 +201,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
     @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
     def test_timeseriesinsights_access_policy(self):
         self.kwargs.update({
-            'loc': 'westus'
         })
 
         self._create_timeseriesinsights_environment()
@@ -237,13 +232,11 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.kwargs.update({
             'rds': 'rds1',
             'env': 'env1',
-            'loc': 'westus',
             'rg': 'jlrg'
         })
 
         # Create
         self.cmd('az timeseriesinsights reference-data-set create -g {rg} --environment-name {env} --name {rds} '
-                 '-l {loc} '
                  '--key-properties DeviceId1 String DeviceFloor Double --data-string-comparison-behavior Ordinal')
 
         # List
