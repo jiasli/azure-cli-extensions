@@ -211,6 +211,10 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.cmd('az timeseriesinsights reference-data-set create -g {rg} --environment-name {env} --name {rds} '
                  '--key-properties DeviceId1 String DeviceFloor Double --data-string-comparison-behavior Ordinal')
 
+        # Update
+        self.cmd('az timeseriesinsights reference-data-set update -g {rg} --environment-name {env} --name {rds} '
+                 '--tags mykey=myvalue')
+
         # List
         self.cmd('az timeseriesinsights reference-data-set list -g {rg} --environment-name {env}',
                  checks=[self.check('length(@)', 1)])

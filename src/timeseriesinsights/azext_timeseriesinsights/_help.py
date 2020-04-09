@@ -60,10 +60,10 @@ examples:
   - name: Create storage account and use it to create a longterm environment
     text: |
         storage=mystorageaccount
-        rg=rg1
+        rg={rg}
         az storage account create -g $rg -n $storage --https-only
         key=$(az storage account keys list -g $rg -n $storage --query [0].value --output tsv)        
-        az timeseriesinsights environment longterm create --resource-group $rg --name env1 --location westus --sku-name L1 --sku-capacity 1 --data-retention 7 --time-series-id-properties DeviceId1 --storage-account-name $storage --storage-management-key $key
+        az timeseriesinsights environment longterm create --resource-group $rg --name {env} --location westus --sku-name L1 --sku-capacity 1 --data-retention 7 --time-series-id-properties DeviceId1 --storage-account-name $storage --storage-management-key $key
 """
 
 helps['timeseriesinsights environment longterm update'] = """
@@ -82,7 +82,7 @@ short-summary: Deletes the environment with the specified name in the specified 
 examples:
   - name: Delete an environments
     text: |-
-           az timeseriesinsights environment delete --resource-group rg1 --name env1
+           az timeseriesinsights environment delete --resource-group {rg} --name {env}
 """
 
 helps['timeseriesinsights environment show'] = """
@@ -91,7 +91,7 @@ short-summary: Gets the environment with the specified name in the specified sub
 examples:
   - name: Show an environments
     text: |-
-           az timeseriesinsights environment show --resource-group rg1 --name env1
+           az timeseriesinsights environment show --resource-group {rg} --name {env}
 """
 
 helps['timeseriesinsights environment list'] = """
@@ -100,7 +100,7 @@ short-summary: Lists all the available environments associated with the subscrip
 examples:
   - name: List environments by resource group
     text: |-
-           az timeseriesinsights environment list --resource-group rg1
+           az timeseriesinsights environment list --resource-group {rg}
   - name: List environments by subscription
     text: |-
            az timeseriesinsights environment list
@@ -117,13 +117,13 @@ short-summary: Create or update an event hub event source under the specified en
 examples:
   - name: Create an event hub and use it for event source
     text: |
-        rg=rg1
+        rg={rg}
         ehns=ehns0409
         eh=eh0409
         az eventhubs namespace create -g $rg -n $ehns
         es_resource_id=$(az eventhubs eventhub create -g $rg -n $eh --namespace-name $ehns --query id --output tsv)
         shared_access_key=$(az eventhubs namespace authorization-rule keys list -g $rg --namespace-name $ehns -n RootManageSharedAccessKey --query primaryKey --output tsv)
-        az timeseriesinsights event-source eventhub create -g $rg --environment-name env1 --name es1 --key-name RootManageSharedAccessKey --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --consumer-group-name '$Default' --timestamp-property-name DeviceId
+        az timeseriesinsights event-source eventhub create -g $rg --environment-name {env} --name es1 --key-name RootManageSharedAccessKey --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --consumer-group-name '$Default' --timestamp-property-name DeviceId
 """
 
 helps['timeseriesinsights event-source eventhub update'] = """
@@ -144,11 +144,11 @@ short-summary: Create or update an iothub event source under the specified envir
 examples:
   - name: Create an iothub and use it for event source
     text: |
-        rg=rg1
+        rg={rg}
         iothub=iothub0409
         es_resource_id=$(az iot hub create -g $rg -n $iothub --query id --output tsv)
         shared_access_key=$(az iot hub policy list -g $rg --hub-name $iothub --query "[?keyName=='iothubowner'].primaryKey" --output tsv)
-        az timeseriesinsights event-source iothub create -g $rg --environment-name env1 --name es2 --consumer-group-name '$Default' --key-name iothubowner --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --timestamp-property-name DeviceId
+        az timeseriesinsights event-source iothub create -g $rg --environment-name {env} --name es2 --consumer-group-name '$Default' --key-name iothubowner --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --timestamp-property-name DeviceId
 """
 
 helps['timeseriesinsights event-source iothub update'] = """
@@ -168,7 +168,7 @@ type: command
 short-summary: Deletes the event source with the specified name in the specified subscription, resource group, and environment
 examples:
   - name: DeleteEventSource
-    text: az timeseriesinsights event-source delete --resource-group rg1 --environment-name env1 --name es1
+    text: az timeseriesinsights event-source delete --resource-group {rg} --environment-name {env} --name es1
 """
 
 helps['timeseriesinsights event-source show'] = """
@@ -176,7 +176,7 @@ type: command
 short-summary: Gets the event source with the specified name in the specified environment.
 examples:
   - name: GetEventHubEventSource
-    text: az timeseriesinsights event-source show --resource-group rg1 --environment-name env1 --name es1
+    text: az timeseriesinsights event-source show --resource-group {rg} --environment-name {env} --name es1
 """
 
 helps['timeseriesinsights event-source list'] = """
@@ -184,7 +184,7 @@ type: command
 short-summary: Lists all the available event sources associated with the subscription and within the specified resource group and environment.
 examples:
   - name: ListEventSourcesByEnvironment
-    text: az timeseriesinsights event-source list --resource-group rg1 --environment-name env1
+    text: az timeseriesinsights event-source list --resource-group {rg} --environment-name {env}
 """
 
 helps['timeseriesinsights reference-data-set'] = """
@@ -197,9 +197,7 @@ type: command
 short-summary: Create or update a reference data set in the specified environment.
 examples:
   - name: ReferenceDataSetsCreate
-    text: |-
-           az timeseriesinsights reference-data-set create --resource-group rg1 --environment-name \\
-           env1 --name "rds1" --location "West US" --key-properties DeviceId1 String DeviceFloor Double
+    text: az timeseriesinsights reference-data-set create -g {rg} --environment-name {env} --name {rds} --key-properties DeviceId1 String DeviceFloor Double --data-string-comparison-behavior Ordinal
 """
 
 helps['timeseriesinsights reference-data-set update'] = """
@@ -207,9 +205,7 @@ type: command
 short-summary: Create or update a reference data set in the specified environment.
 examples:
   - name: ReferenceDataSetsUpdate
-    text: |-
-           az timeseriesinsights reference-data-set update --resource-group rg1 --environment-name \\
-           env1 --name "rds1"
+    text: az timeseriesinsights reference-data-set update -g {rg} --environment-name {env} --name {rds} --tags mykey=myvalue
 """
 
 helps['timeseriesinsights reference-data-set delete'] = """
@@ -218,8 +214,7 @@ short-summary: Deletes the reference data set with the specified name in the spe
 examples:
   - name: ReferenceDataSetsDelete
     text: |-
-           az timeseriesinsights reference-data-set delete --resource-group rg1 --environment-name \\
-           env1 --name "rds1"
+           az timeseriesinsights reference-data-set delete --resource-group {rg} --environment-name {env} --name {rds}
 """
 
 helps['timeseriesinsights reference-data-set show'] = """
@@ -228,8 +223,7 @@ short-summary: Gets the reference data set with the specified name in the specif
 examples:
   - name: ReferenceDataSetsGet
     text: |-
-           az timeseriesinsights reference-data-set show --resource-group rg1 --environment-name \\
-           env1 --name "rds1"
+           az timeseriesinsights reference-data-set show --resource-group {rg} --environment-name {env} --name {rds}
 """
 
 helps['timeseriesinsights reference-data-set list'] = """
@@ -238,8 +232,7 @@ short-summary: Lists all the available reference data sets associated with the s
 examples:
   - name: ReferenceDataSetsListByEnvironment
     text: |-
-           az timeseriesinsights reference-data-set list --resource-group rg1 --environment-name \\
-           env1
+           az timeseriesinsights reference-data-set list --resource-group {rg} --environment-name {env}
 """
 
 helps['timeseriesinsights access-policy'] = """
@@ -253,8 +246,8 @@ short-summary: Create or update an access policy in the specified environment.
 examples:
   - name: AccessPoliciesCreate
     text: |-
-           az timeseriesinsights access-policy create --resource-group rg1 --environment-name \\
-           env1 --name "ap1" --description "some description" --roles "Reader"
+           az timeseriesinsights access-policy create --resource-group {rg} --environment-name \\
+           {env} --name "ap1" --description "some description" --roles "Reader"
 """
 
 helps['timeseriesinsights access-policy update'] = """
@@ -263,8 +256,8 @@ short-summary: Create or update an access policy in the specified environment.
 examples:
   - name: AccessPoliciesUpdate
     text: |-
-           az timeseriesinsights access-policy update --resource-group rg1 --environment-name \\
-           env1 --name "ap1" --roles "Reader,Contributor"
+           az timeseriesinsights access-policy update --resource-group {rg} --environment-name \\
+           {env} --name "ap1" --roles "Reader,Contributor"
 """
 
 helps['timeseriesinsights access-policy delete'] = """
@@ -273,8 +266,8 @@ short-summary: Deletes the access policy with the specified name in the specifie
 examples:
   - name: AccessPoliciesDelete
     text: |-
-           az timeseriesinsights access-policy delete --resource-group rg1 --environment-name \\
-           env1 --name "ap1"
+           az timeseriesinsights access-policy delete --resource-group {rg} --environment-name \\
+           {env} --name "ap1"
 """
 
 helps['timeseriesinsights access-policy show'] = """
@@ -283,7 +276,7 @@ short-summary: Gets the access policy with the specified name in the specified e
 examples:
   - name: AccessPoliciesGet
     text: |-
-           az timeseriesinsights access-policy show --resource-group rg1 --environment-name env1 \\
+           az timeseriesinsights access-policy show --resource-group {rg} --environment-name {env} \\
            --name "ap1"
 """
 
@@ -293,5 +286,5 @@ short-summary: Lists all the available access policies associated with the envir
 examples:
   - name: AccessPoliciesByEnvironment
     text: |-
-           az timeseriesinsights access-policy list --resource-group rg1 --environment-name env1
+           az timeseriesinsights access-policy list --resource-group {rg} --environment-name {env}
 """

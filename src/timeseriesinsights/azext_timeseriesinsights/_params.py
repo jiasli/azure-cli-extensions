@@ -73,7 +73,7 @@ def load_arguments(self, _):
 
     with self.argument_context('timeseriesinsights reference-data-set create') as c:
         from .vendored_sdks.timeseriesinsights.models import DataStringComparisonBehavior
-        c.argument('key_properties', nargs='+', help='The list of key properties for the reference data set. Format: [NAME TYPE] ...')
+        c.argument('key_properties', nargs='+', help='The list of key properties for the reference data set. Format: NAME TYPE ...')
         c.argument('data_string_comparison_behavior', arg_type=get_enum_type(DataStringComparisonBehavior))
     # endregion
 

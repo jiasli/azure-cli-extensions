@@ -189,11 +189,11 @@ def create_timeseriesinsights_reference_data_set(cmd, client,
     key_property_count, remaining = divmod(len(key_properties), 2)
     if remaining:
         from knack.util import CLIError
-        raise CLIError("Usage error: --key-properties [NAME TYPE] ...")
+        raise CLIError("Usage error: --key-properties NAME TYPE ...")
 
     for i in range(0, key_property_count):
         # eg. --key-properties DeviceId1 String DeviceFloor Double
-        key_properties_list.append(ReferenceDataSetKeyProperty(name=key_properties[i * 2], type=key_properties[i * 2 + 1]))
+        key_properties_list.append(ReferenceDataSetKeyProperty(name=key_properties.pop(0), type=key_properties.pop(0)))
 
     parameters = ReferenceDataSetCreateOrUpdateParameters(
         location=location,
@@ -208,7 +208,7 @@ def create_timeseriesinsights_reference_data_set(cmd, client,
 def update_timeseriesinsights_reference_data_set(cmd, client,
                                                  resource_group_name, environment_name, reference_data_set_name,
                                                  tags=None):
-    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, reference_data_set_name=reference_data_set_name, tags=tags)
+    return client.update(resource_group_name=resource_group_name, environment_name=environment_name, reference_data_set_name=reference_data_set_name, tags=tags)
 
 
 def create_timeseriesinsights_access_policy(cmd, client,
