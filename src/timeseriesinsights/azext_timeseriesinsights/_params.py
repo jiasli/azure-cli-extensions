@@ -14,8 +14,10 @@ from azure.cli.core.commands.parameters import (
     get_location_type
 )
 from azext_timeseriesinsights.action import TimeSeriesIdPropertyAction
+from azure.cli.core.commands.validators import get_default_location_from_resource_group
 
 from knack.arguments import CLIArgumentType
+from ._validators import iso_8601_timespace
 
 environment_name_type = CLIArgumentType(help='The name of the Time Series Insights environment associated with the specified resource group.')
 
@@ -25,7 +27,8 @@ def load_arguments(self, _):
         pass
 
     with self.argument_context('timeseriesinsights') as c:
-        c.argument('resource_group', resource_group_name_type)
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('location', get_location_type(self.cli_ctx), validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
 
     # region environment
@@ -40,12 +43,14 @@ def load_arguments(self, _):
     with self.argument_context('timeseriesinsights environment standard') as c:
         from .vendored_sdks.timeseriesinsights.models import StorageLimitExceededBehavior
         c.argument('storage_limit_exceeded_behavior', arg_type=get_enum_type(StorageLimitExceededBehavior))
+        c.argument('data_retention_time', type=iso_8601_timespace, help='The minimum number of days the environment\'s events will be available for query.')
         c.argument('partition_key_properties', nargs='+')
 
     with self.argument_context('timeseriesinsights environment longterm') as c:
         c.argument('storage_account_name', arg_group="Storage Configuration", help='The name of the storage account that will hold the environment\'s long term data.')
         c.argument('storage_management_key', arg_group="Storage Configuration", help='The value of the management key that grants the Time Series Insights service write access to the storage account. This property is not shown in environment responses.')
         c.argument('time_series_id_properties', nargs='+')
+        c.argument('data_retention', type=iso_8601_timespace, help='The number of days the environment\'s events will be available for query from the warm store.')
     # endregion
 
     # region event-source

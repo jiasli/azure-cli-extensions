@@ -16,3 +16,7 @@ def example_name_or_id_validator(cmd, namespace):
                 type='storageAccounts',
                 name=namespace.storage_account
             )
+
+
+def iso_8601_timespace(string):
+    return "P{}D".format(string)

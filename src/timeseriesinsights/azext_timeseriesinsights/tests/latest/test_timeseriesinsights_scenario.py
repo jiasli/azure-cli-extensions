@@ -23,71 +23,92 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         # https://github.com/Azure/azure-cli/blob/31a9724478c67751ae0bee6cc0d9b75b763df17c/src/azure-cli/azure/cli/command_modules/keyvault/tests/latest/test_keyvault_commands.py#L34
         return self.cmd('az timeseriesinsights environment standard create '
                         '--resource-group {rg} '
-                        '--name "{env}" '
+                        '--name {env} '
                         '--location {loc} '
-                        '--sku-name "S1" '
-                        '--sku-capacity "1" '
-                        '--data-retention-time "P31D" '
+                        '--sku-name S1 '
+                        '--sku-capacity 1 '
+                        '--data-retention-time 31 '
                         '--partition-key-properties DeviceId1 '
                         '--storage-limit-exceeded-behavior PauseIngress')
 
     @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
-    @StorageAccountPreparer()
-    def test_timeseriesinsights_environment(self, resource_group, storage_account):
+    def test_timeseriesinsights_environment_standard(self, resource_group):
+        self.kwargs.update({
+            'env': self.create_random_name('cli-test-tsi-env', 24),
+        })
 
         # Test environment standard create
         self.cmd('az timeseriesinsights environment standard create '
                  '--resource-group {rg} '
-                 '--name "env1" '
-                 '--location "westus" '
-                 '--sku-name "S1" '
-                 '--sku-capacity "1" '
-                 '--data-retention-time "P31D" '
+                 '--name {env} '
+                 '--location westus '
+                 '--sku-name S1 '
+                 '--sku-capacity 1 '
+                 '--data-retention-time 7 '
                  '--partition-key-properties DeviceId1 '
                  '--storage-limit-exceeded-behavior PauseIngress',
-                 checks=[self.check('name', 'env1')])
+                 checks=[self.check('name', '{env}')])
+
+        self.cmd('az timeseriesinsights environment standard update --resource-group {rg} --name {env} --sku-name S1 --sku-capacity 2',
+                 checks=[self.check('sku.capacity', '2')])
+
+        self.cmd('az timeseriesinsights environment standard update --resource-group {rg} --name {env} --data-retention-time 8',
+                 checks=[self.check('dataRetentionTime', '8 days, 0:00:00')])
+
+        self.cmd('az timeseriesinsights environment standard update --resource-group {rg} --name {env} --storage-limit-exceeded-behavior PurgeOldData',
+                 checks=[self.check('storageLimitExceededBehavior', 'PurgeOldData')])
+
+        self.cmd('az timeseriesinsights environment show '
+                 '--resource-group {rg} '
+                 '--name {env}',
+                 checks=[self.check('name', '{env}')])
+
+        self.cmd('az timeseriesinsights environment list '
+                 '--resource-group {rg}',
+                 checks=[self.check('length(@)', 1)])
+
+        self.cmd('az timeseriesinsights environment list',
+                 checks=[self.check("length([?name=='{env}'])", 1)])
+
+        self.cmd('az timeseriesinsights environment delete '
+                 '--resource-group {rg} '
+                 '--name {env}',
+                 checks=[])
+
+        self.cmd('az timeseriesinsights environment list '
+                 '--resource-group {rg}',
+                 checks=[self.check('length(@)', 0)])
+
+    @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
+    @StorageAccountPreparer()
+    def test_timeseriesinsights_environment_longterm(self, resource_group, storage_account):
+
+        self.kwargs.update({
+            'env': self.create_random_name('cli-test-tsi-env', 24),
+        })
 
         # Test environment longterm create
         key = self.cmd('az storage account keys list -g {rg} -n {sa}').get_output_in_json()[0]['value']
 
         self.cmd('az timeseriesinsights environment longterm create '
                  '--resource-group {rg} '
-                 '--name "env2" '
-                 '--location "westus" '
-                 '--sku-name "L1" '
-                 '--sku-capacity "1" '
-                 '--data-retention "P31D" '
+                 '--name {env} '
+                 '--location westus '
+                 '--sku-name L1 '
+                 '--sku-capacity 1 '
+                 '--data-retention 7 '
                  '--time-series-id-properties DeviceId1 '
                  '--storage-account-name {sa} '
                  '--storage-management-key ' + key,
-                 checks=[self.check('name', 'env2')])
+                 checks=[self.check('name', '{env}')])
 
-        self.cmd('az timeseriesinsights environment show '
-                 '--resource-group {rg} '
-                 '--name "env1"',
-                 checks=[self.check('name', 'env1')])
+        self.cmd('az timeseriesinsights environment longterm update --resource-group {rg} --name {env} --data-retention 8',
+                 checks=[self.check('dataRetention', '8 days, 0:00:00')])
 
-        self.cmd('az timeseriesinsights environment show '
-                 '--resource-group {rg} '
-                 '--name "env2"',
-                 checks=[self.check('name', 'env2')])
-
-        self.cmd('az timeseriesinsights environment list '
-                 '--resource-group {rg}',
-                 checks=[self.check('length(@)', 2)])
-
-        self.cmd('az timeseriesinsights environment list',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights environment delete '
-                 '--resource-group {rg} '
-                 '--name "env1"',
-                 checks=[])
-
-        self.cmd('az timeseriesinsights environment delete '
-                 '--resource-group {rg} '
-                 '--name "env2"',
-                 checks=[])
+        # This is broken, because --data-retention is required, but "Only a single environment property can be updated
+        # per PATCH request."
+        # self.cmd('az timeseriesinsights environment standard update --resource-group {rg} --name {env} --storage-limit-exceeded-behavior PurgeOldData',
+        #          checks=[self.check('storageLimitExceededBehavior', 'PurgeOldData')])
 
     @ResourceGroupPreparer(name_prefix='cli_test_timeseriesinsights')
     def test_timeseriesinsights_event_source_eventhub(self, resource_group):
@@ -109,7 +130,7 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         result = self.cmd('az eventhubs namespace authorization-rule keys list -g {rg} --namespace-name {ehns} -n RootManageSharedAccessKey').get_output_in_json()
         self.kwargs["shared-access-key"] = result["primaryKey"]
 
-        self.cmd('az timeseriesinsights event-source eventhub create -g {rg} --environment-name {env} --name {es} --location westus '
+        self.cmd('az timeseriesinsights event-source eventhub create -g {rg} --environment-name {env} --name {es} '
                  '--service-bus-namespace {ehns} --event-hub-name {eh} --key-name RootManageSharedAccessKey '
                  '--shared-access-key {shared-access-key} '
                  '--event-source-resource-id {es_resource_id} '
@@ -144,7 +165,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.kwargs["shared-access-key"] = result[0]["primaryKey"]
 
         self.cmd('az timeseriesinsights event-source iothub create -g {rg} --environment-name {env} --name {es} '
-                 '--location {loc} '
                  '--iot-hub-name {iothub} --consumer-group-name $Default '
                  '--key-name {key-name} --shared-access-key {shared-access-key} '
                  '--event-source-resource-id {es_resource_id} --timestamp-property-name DeviceId')
@@ -170,7 +190,6 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
 
         # Create
         self.cmd('az timeseriesinsights reference-data-set create -g {rg} --environment-name {env} --name {rds} '
-                 '-l {loc} '
                  '--key-properties DeviceId1 String DeviceFloor Double --data-string-comparison-behavior Ordinal')
 
         # List

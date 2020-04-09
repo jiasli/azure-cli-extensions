@@ -32,8 +32,8 @@ def load_command_table(self, _):
     with self.command_group('timeseriesinsights environment standard', timeseriesinsights_environments, client_factory=cf_environments) as g:
         g.custom_command('create', 'create_timeseriesinsights_environment_standard',
                          doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#StandardEnvironmentCreateOrUpdateParameters")
-        g.generic_update_command('update', custom_func_name='update_timeseriesinsights_environment_standard', supports_no_wait=True,
-                                 doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#StandardEnvironmentCreateOrUpdateParameters")
+        g.custom_command('update', 'update_timeseriesinsights_environment_standard',
+                         doc_string_source="azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models#StandardEnvironmentCreateOrUpdateParameters")
 
     with self.command_group('timeseriesinsights environment longterm', timeseriesinsights_environments, client_factory=cf_environments) as g:
         g.custom_command('create', 'create_timeseriesinsights_environment_longterm',

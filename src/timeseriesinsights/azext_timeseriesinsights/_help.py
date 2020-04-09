@@ -33,52 +33,75 @@ helps['timeseriesinsights environment'] = """
     short-summary: Commands to manage timeseriesinsights environment.
 """
 
-helps['timeseriesinsights environment create'] = """
+helps['timeseriesinsights environment standard create'] = """
     type: command
-    short-summary: Create or update an environment in the specified subscription and resource group.
+    short-summary: Create or update a standard environment in the specified subscription and resource group.
     examples:
-      - name: EnvironmentsCreate
-        text: |-
-               az timeseriesinsights environment create --resource-group "rg1" --name "env1" --location \\
-               "West US" --sku-name "S1" --sku-capacity "1" --data-retention-time "P31D"
+      - name: Create a standard environment
+        text: az timeseriesinsights environment standard create --resource-group {rg} --name {env} --location westus --sku-name S1 --sku-capacity 1 --data-retention-time P31D --partition-key DeviceId1 --storage-limit-exceeded-behavior PauseIngress
 """
 
-helps['timeseriesinsights environment update'] = """
-    type: command
-    short-summary: Create or update an environment in the specified subscription and resource group.
-    examples:
-      - name: EnvironmentsUpdate
-        text: |-
-               az timeseriesinsights environment update --resource-group "rg1" --name "env1" --sku-name \\
-               "S1" --sku-capacity "10"
+helps['timeseriesinsights environment standard update'] = """
+type: command
+short-summary: Update a standard environment in the specified subscription and resource group.
+examples:
+  - name: Update sku capacity
+    text: az timeseriesinsights environment standard update --resource-group {rg} --name {env} --sku-name S1 --sku-capacity 2
+  - name: Update data retention days
+    text: az timeseriesinsights environment standard update --resource-group {rg} --name {env} --data-retention-time 8
+  - name: Update storage limit exceeded behavior
+    text: az timeseriesinsights environment standard update --resource-group {rg} --name {env} --storage-limit-exceeded-behavior PurgeOldData
+"""
+
+helps['timeseriesinsights environment longterm create'] = """
+type: command
+short-summary: Create or update a longterm environment in the specified subscription and resource group.
+examples:
+  - name: Create storage account and use it to create a longterm environment
+    text: |
+        storage=mystorageaccount
+        rg=rg1
+        az storage account create -g $rg -n $storage --https-only
+        key=$(az storage account keys list -g $rg -n $storage --query [0].value --output tsv)        
+        az timeseriesinsights environment longterm create --resource-group $rg --name env1 --location westus --sku-name L1 --sku-capacity 1 --data-retention 7 --time-series-id-properties DeviceId1 --storage-account-name $storage --storage-management-key $key
+"""
+
+helps['timeseriesinsights environment longterm update'] = """
+type: command
+short-summary: Update a longterm environment in the specified subscription and resource group.
+examples:
+  - name: Update data retention
+    text: az timeseriesinsights environment longterm update --resource-group {rg} --name {env} --data-retention 8
+  - name: Update storage limit exceeded behavior (not working yet)
+    text: az timeseriesinsights environment standard update --resource-group {rg} --name {env} --storage-limit-exceeded-behavior PurgeOldData
 """
 
 helps['timeseriesinsights environment delete'] = """
     type: command
     short-summary: Deletes the environment with the specified name in the specified subscription and resource group.
     examples:
-      - name: EnvironmentsDelete
+      - name: Delete an environments
         text: |-
-               az timeseriesinsights environment delete --resource-group "rg1" --name "env1"
+               az timeseriesinsights environment delete --resource-group rg1 --name env1
 """
 
 helps['timeseriesinsights environment show'] = """
     type: command
     short-summary: Gets the environment with the specified name in the specified subscription and resource group.
     examples:
-      - name: EnvironmentsGet
+      - name: Show an environments
         text: |-
-               az timeseriesinsights environment show --resource-group "rg1" --name "env1"
+               az timeseriesinsights environment show --resource-group rg1 --name env1
 """
 
 helps['timeseriesinsights environment list'] = """
     type: command
     short-summary: Lists all the available environments associated with the subscription and within the specified resource group.
     examples:
-      - name: EnvironmentsByResourceGroup
+      - name: List environments by resource group
         text: |-
-               az timeseriesinsights environment list --resource-group "rg1"
-      - name: EnvironmentsBySubscription
+               az timeseriesinsights environment list --resource-group rg1
+      - name: List environments by subscription
         text: |-
                az timeseriesinsights environment list
 """
@@ -94,8 +117,8 @@ helps['timeseriesinsights event-source create'] = """
     examples:
       - name: CreateEventHubEventSource
         text: |-
-               az timeseriesinsights event-source create --resource-group "rg1" --environment-name \\
-               "env1" --name "es1" --location "West US"
+               az timeseriesinsights event-source create --resource-group rg1 --environment-name \\
+               env1 --name "es1" --location "West US"
 """
 
 helps['timeseriesinsights event-source update'] = """
@@ -104,8 +127,8 @@ helps['timeseriesinsights event-source update'] = """
     examples:
       - name: UpdateEventSource
         text: |-
-               az timeseriesinsights event-source update --resource-group "rg1" --environment-name \\
-               "env1" --name "es1"
+               az timeseriesinsights event-source update --resource-group rg1 --environment-name \\
+               env1 --name "es1"
 """
 
 helps['timeseriesinsights event-source delete'] = """
@@ -114,8 +137,8 @@ helps['timeseriesinsights event-source delete'] = """
     examples:
       - name: DeleteEventSource
         text: |-
-               az timeseriesinsights event-source delete --resource-group "rg1" --environment-name \\
-               "env1" --name "es1"
+               az timeseriesinsights event-source delete --resource-group rg1 --environment-name \\
+               env1 --name "es1"
 """
 
 helps['timeseriesinsights event-source show'] = """
@@ -124,7 +147,7 @@ helps['timeseriesinsights event-source show'] = """
     examples:
       - name: GetEventHubEventSource
         text: |-
-               az timeseriesinsights event-source show --resource-group "rg1" --environment-name "env1" \\
+               az timeseriesinsights event-source show --resource-group rg1 --environment-name env1 \\
                --name "es1"
 """
 
@@ -134,7 +157,7 @@ helps['timeseriesinsights event-source list'] = """
     examples:
       - name: ListEventSourcesByEnvironment
         text: |-
-               az timeseriesinsights event-source list --resource-group "rg1" --environment-name "env1"
+               az timeseriesinsights event-source list --resource-group rg1 --environment-name env1
 """
 
 helps['timeseriesinsights reference-data-set'] = """
@@ -148,8 +171,8 @@ helps['timeseriesinsights reference-data-set create'] = """
     examples:
       - name: ReferenceDataSetsCreate
         text: |-
-               az timeseriesinsights reference-data-set create --resource-group "rg1" --environment-name \\
-               "env1" --name "rds1" --location "West US" --key-properties DeviceId1 String DeviceFloor Double
+               az timeseriesinsights reference-data-set create --resource-group rg1 --environment-name \\
+               env1 --name "rds1" --location "West US" --key-properties DeviceId1 String DeviceFloor Double
 """
 
 helps['timeseriesinsights reference-data-set update'] = """
@@ -158,8 +181,8 @@ helps['timeseriesinsights reference-data-set update'] = """
     examples:
       - name: ReferenceDataSetsUpdate
         text: |-
-               az timeseriesinsights reference-data-set update --resource-group "rg1" --environment-name \\
-               "env1" --name "rds1"
+               az timeseriesinsights reference-data-set update --resource-group rg1 --environment-name \\
+               env1 --name "rds1"
 """
 
 helps['timeseriesinsights reference-data-set delete'] = """
@@ -168,8 +191,8 @@ helps['timeseriesinsights reference-data-set delete'] = """
     examples:
       - name: ReferenceDataSetsDelete
         text: |-
-               az timeseriesinsights reference-data-set delete --resource-group "rg1" --environment-name \\
-               "env1" --name "rds1"
+               az timeseriesinsights reference-data-set delete --resource-group rg1 --environment-name \\
+               env1 --name "rds1"
 """
 
 helps['timeseriesinsights reference-data-set show'] = """
@@ -178,8 +201,8 @@ helps['timeseriesinsights reference-data-set show'] = """
     examples:
       - name: ReferenceDataSetsGet
         text: |-
-               az timeseriesinsights reference-data-set show --resource-group "rg1" --environment-name \\
-               "env1" --name "rds1"
+               az timeseriesinsights reference-data-set show --resource-group rg1 --environment-name \\
+               env1 --name "rds1"
 """
 
 helps['timeseriesinsights reference-data-set list'] = """
@@ -188,8 +211,8 @@ helps['timeseriesinsights reference-data-set list'] = """
     examples:
       - name: ReferenceDataSetsListByEnvironment
         text: |-
-               az timeseriesinsights reference-data-set list --resource-group "rg1" --environment-name \\
-               "env1"
+               az timeseriesinsights reference-data-set list --resource-group rg1 --environment-name \\
+               env1
 """
 
 helps['timeseriesinsights access-policy'] = """
@@ -203,8 +226,8 @@ helps['timeseriesinsights access-policy create'] = """
     examples:
       - name: AccessPoliciesCreate
         text: |-
-               az timeseriesinsights access-policy create --resource-group "rg1" --environment-name \\
-               "env1" --name "ap1" --description "some description" --roles "Reader"
+               az timeseriesinsights access-policy create --resource-group rg1 --environment-name \\
+               env1 --name "ap1" --description "some description" --roles "Reader"
 """
 
 helps['timeseriesinsights access-policy update'] = """
@@ -213,8 +236,8 @@ helps['timeseriesinsights access-policy update'] = """
     examples:
       - name: AccessPoliciesUpdate
         text: |-
-               az timeseriesinsights access-policy update --resource-group "rg1" --environment-name \\
-               "env1" --name "ap1" --roles "Reader,Contributor"
+               az timeseriesinsights access-policy update --resource-group rg1 --environment-name \\
+               env1 --name "ap1" --roles "Reader,Contributor"
 """
 
 helps['timeseriesinsights access-policy delete'] = """
@@ -223,8 +246,8 @@ helps['timeseriesinsights access-policy delete'] = """
     examples:
       - name: AccessPoliciesDelete
         text: |-
-               az timeseriesinsights access-policy delete --resource-group "rg1" --environment-name \\
-               "env1" --name "ap1"
+               az timeseriesinsights access-policy delete --resource-group rg1 --environment-name \\
+               env1 --name "ap1"
 """
 
 helps['timeseriesinsights access-policy show'] = """
@@ -233,7 +256,7 @@ helps['timeseriesinsights access-policy show'] = """
     examples:
       - name: AccessPoliciesGet
         text: |-
-               az timeseriesinsights access-policy show --resource-group "rg1" --environment-name "env1" \\
+               az timeseriesinsights access-policy show --resource-group rg1 --environment-name env1 \\
                --name "ap1"
 """
 
@@ -243,5 +266,5 @@ helps['timeseriesinsights access-policy list'] = """
     examples:
       - name: AccessPoliciesByEnvironment
         text: |-
-               az timeseriesinsights access-policy list --resource-group "rg1" --environment-name "env1"
+               az timeseriesinsights access-policy list --resource-group rg1 --environment-name env1
 """

@@ -2,8 +2,7 @@ interactions:
 - request:
     body: '{"location": "westus", "sku": {"name": "S1", "capacity": 1}, "kind": "Standard",
       "properties": {"dataRetentionTime": "P31D", "storageLimitExceededBehavior":
-      "PauseIngress", "partitionKeyProperties": [{"name": "[''DeviceId1'']", "type":
-      "String"}]}}'
+      "PauseIngress", "partitionKeyProperties": [{"name": "DeviceId1", "type": "String"}]}}'
     headers:
       Accept:
       - application/json
@@ -14,31 +13,31 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '246'
+      - '242'
       Content-Type:
       - application/json; charset=utf-8
       ParameterSetName:
       - --resource-group --name --location --sku-name --sku-capacity --data-retention-time
         --partition-key-properties --storage-limit-exceeded-behavior
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
       accept-language:
       - en-US
     method: PUT
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000002?api-version=2018-08-15-preview
   response:
     body:
-      string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"[''DeviceId1'']","type":"String"}],"creationTime":"2020-03-31T08:32:58+00:00","provisioningState":"Accepted","dataAccessId":"0ae12db2-b2e5-47d0-a26b-d1f6fffc1012","dataAccessFqdn":"0ae12db2-b2e5-47d0-a26b-d1f6fffc1012.env.timeseries.azure.com","requestApiVersion":"2018-08-15-preview"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000002","name":"cli-test-tsi-env000002","type":"Microsoft.TimeSeriesInsights/Environments"}'
+      string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"DeviceId1","type":"String"}],"creationTime":"2020-04-09T06:24:48+00:00","provisioningState":"Accepted","dataAccessId":"11533d9c-cc18-453a-bf37-58a68cdabc62","dataAccessFqdn":"11533d9c-cc18-453a-bf37-58a68cdabc62.env.timeseries.azure.com","requestApiVersion":"2018-08-15-preview"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000002","name":"cli-test-tsi-env000002","type":"Microsoft.TimeSeriesInsights/Environments"}'
     headers:
       cache-control:
       - no-cache
       content-length:
-      - '802'
+      - '798'
       content-type:
       - application/json
       date:
-      - Tue, 31 Mar 2020 08:32:59 GMT
+      - Thu, 09 Apr 2020 06:24:49 GMT
       expires:
       - '-1'
       pragma:
@@ -50,7 +49,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-ms-ratelimit-remaining-subscription-writes:
-      - '1198'
+      - '1199'
     status:
       code: 201
       message: Created
@@ -69,23 +68,23 @@ interactions:
       - --resource-group --name --location --sku-name --sku-capacity --data-retention-time
         --partition-key-properties --storage-limit-exceeded-behavior
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
     method: GET
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000002?api-version=2018-08-15-preview
   response:
     body:
-      string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"[''DeviceId1'']","type":"String"}],"creationTime":"Tue,
-        31 Mar 2020 08:32:58 GMT","provisioningState":"Succeeded","requestApiVersion":"2018-08-15-preview","dataAccessId":"0ae12db2-b2e5-47d0-a26b-d1f6fffc1012","dataAccessFqdn":"0ae12db2-b2e5-47d0-a26b-d1f6fffc1012.env.timeseries.azure.com"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000002","name":"cli-test-tsi-env000002","type":"Microsoft.TimeSeriesInsights/Environments"}'
+      string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"DeviceId1","type":"String"}],"creationTime":"Thu,
+        09 Apr 2020 06:24:48 GMT","provisioningState":"Succeeded","requestApiVersion":"2018-08-15-preview","dataAccessId":"11533d9c-cc18-453a-bf37-58a68cdabc62","dataAccessFqdn":"11533d9c-cc18-453a-bf37-58a68cdabc62.env.timeseries.azure.com"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000002","name":"cli-test-tsi-env000002","type":"Microsoft.TimeSeriesInsights/Environments"}'
     headers:
       cache-control:
       - no-cache
       content-length:
-      - '807'
+      - '803'
       content-type:
       - application/json
       date:
-      - Tue, 31 Mar 2020 08:33:31 GMT
+      - Thu, 09 Apr 2020 06:25:21 GMT
       expires:
       - '-1'
       pragma:
@@ -122,8 +121,8 @@ interactions:
       ParameterSetName:
       - -g --environment-name --name --principal-object-id --description --roles
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
       accept-language:
       - en-US
     method: PUT
@@ -139,7 +138,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Tue, 31 Mar 2020 08:33:33 GMT
+      - Thu, 09 Apr 2020 06:25:24 GMT
       expires:
       - '-1'
       pragma:
@@ -155,7 +154,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-ms-ratelimit-remaining-subscription-writes:
-      - '1197'
+      - '1198'
     status:
       code: 200
       message: OK
@@ -177,8 +176,8 @@ interactions:
       ParameterSetName:
       - -g --environment-name --name --description
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
       accept-language:
       - en-US
     method: PATCH
@@ -195,7 +194,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Tue, 31 Mar 2020 08:33:36 GMT
+      - Thu, 09 Apr 2020 06:25:26 GMT
       expires:
       - '-1'
       pragma:
@@ -211,7 +210,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-ms-ratelimit-remaining-subscription-writes:
-      - '1199'
+      - '1197'
     status:
       code: 200
       message: OK
@@ -233,8 +232,8 @@ interactions:
       ParameterSetName:
       - -g --environment-name --name --roles
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
       accept-language:
       - en-US
     method: PATCH
@@ -251,7 +250,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Tue, 31 Mar 2020 08:33:38 GMT
+      - Thu, 09 Apr 2020 06:25:29 GMT
       expires:
       - '-1'
       pragma:
@@ -285,8 +284,8 @@ interactions:
       ParameterSetName:
       - -g --environment-name --name
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
       accept-language:
       - en-US
     method: GET
@@ -303,7 +302,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Tue, 31 Mar 2020 08:33:40 GMT
+      - Thu, 09 Apr 2020 06:25:31 GMT
       expires:
       - '-1'
       pragma:
@@ -335,8 +334,8 @@ interactions:
       ParameterSetName:
       - -g --environment-name
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
       accept-language:
       - en-US
     method: GET
@@ -353,7 +352,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Tue, 31 Mar 2020 08:33:42 GMT
+      - Thu, 09 Apr 2020 06:25:33 GMT
       expires:
       - '-1'
       pragma:
@@ -387,8 +386,8 @@ interactions:
       ParameterSetName:
       - -g --environment-name --name
       User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.2
-        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.0
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
       accept-language:
       - en-US
     method: DELETE
@@ -402,7 +401,7 @@ interactions:
       content-length:
       - '0'
       date:
-      - Tue, 31 Mar 2020 08:33:45 GMT
+      - Thu, 09 Apr 2020 06:25:36 GMT
       expires:
       - '-1'
       pragma:

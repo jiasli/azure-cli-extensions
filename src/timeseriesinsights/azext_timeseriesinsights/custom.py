@@ -14,56 +14,53 @@ def list_timeseriesinsights_operation(cmd, client):
 
 
 def create_timeseriesinsights_environment_standard(cmd, client,
-                                                   resource_group, environment_name,
-                                                   location,
+                                                   resource_group_name, environment_name,
+
                                                    sku_name, sku_capacity,
-                                                   tags=None,
-                                                   data_retention_time=None,
+                                                   data_retention_time,
                                                    storage_limit_exceeded_behavior=None,
-                                                   partition_key_properties=None):
-    from .vendored_sdks.timeseriesinsights.models import StandardEnvironmentCreateOrUpdateParameters, Sku, TimeSeriesIdProperty
+                                                   partition_key_properties=None,
+                                                   location=None, tags=None):
+    from .vendored_sdks.timeseriesinsights.models import StandardEnvironmentCreateOrUpdateParameters, Sku, \
+        TimeSeriesIdProperty
+
     parameters = StandardEnvironmentCreateOrUpdateParameters(
         location=location,
         tags=tags,
         sku=Sku(name=sku_name, capacity=sku_capacity),
         data_retention_time=data_retention_time,
         storage_limit_exceeded_behavior=storage_limit_exceeded_behavior,
-        partition_key_properties=[TimeSeriesIdProperty(name=partition_key_properties, type="String")]
+        # Need to confirm whether multiple key properties are supported
+        partition_key_properties=[TimeSeriesIdProperty(name=id_property, type="String") for id_property in partition_key_properties]
     )
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, parameters=parameters)
+    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, parameters=parameters)
 
 
-def update_timeseriesinsights_environment_standard(instance, cmd,
-                                                   tags=None,
-                                                   sku_name=None,
-                                                   sku_capacity=None,
-                                                   data_retention_time=None,
-                                                   storage_limit_exceeded_behavior=None,
-                                                   partition_key_properties=None):
-    with cmd.update_context(instance) as c:
-        c.set_param('tags', tags)
-        c.set_param('sku.name', sku_name)
-        c.set_param('sku.capacity', sku_capacity)
-        c.set_param('data_retention_time', data_retention_time)
-        c.set_param('storage_limit_exceeded_behavior', storage_limit_exceeded_behavior)
-        c.set_param('partition_key_properties', [{"name": partition_key_properties, "type": "String"}])
+def update_timeseriesinsights_environment_standard(cmd, client,
+                                                   resource_group_name, environment_name,
+                                                   sku_name=None, sku_capacity=None,
+                                                   data_retention_time=None, storage_limit_exceeded_behavior=None,
+                                                   partition_key_properties=None, tags=None):
+    from .vendored_sdks.timeseriesinsights.models import StandardEnvironmentUpdateParameters, Sku, TimeSeriesIdProperty
 
-        # Need to clear provisioning_state because StandardEnvironmentResource.provisioning_state is not allowed by
-        # StandardEnvironmentCreateOrUpdateParameters
-        c.set_param('provisioning_state', '')
-
-    return instance
+    parameters = StandardEnvironmentUpdateParameters(
+        tags=tags,
+        sku=Sku(name=sku_name, capacity=sku_capacity) if sku_name and sku_capacity else None,
+        data_retention_time=data_retention_time,
+        storage_limit_exceeded_behavior=storage_limit_exceeded_behavior,
+        partition_key_properties=[TimeSeriesIdProperty(name=id_property, type="String") for id_property in partition_key_properties] if partition_key_properties else None
+    )
+    return client.update(resource_group_name=resource_group_name, environment_name=environment_name, parameters=parameters)
 
 
 def create_timeseriesinsights_environment_longterm(cmd, client,
-                                                   resource_group, environment_name,
-                                                   location,
+                                                   resource_group_name, environment_name,
                                                    sku_name, sku_capacity,
-                                                   tags=None,
-                                                   time_series_id_properties=None,
-                                                   storage_account_name=None,
-                                                   storage_management_key=None,
-                                                   data_retention=None):
+                                                   time_series_id_properties,
+                                                   storage_account_name,
+                                                   storage_management_key,
+                                                   data_retention,
+                                                   location=None, tags=None):
     from .vendored_sdks.timeseriesinsights.models import LongTermEnvironmentCreateOrUpdateParameters, Sku, \
         TimeSeriesIdProperty, LongTermStorageConfigurationInput
     parameters = LongTermEnvironmentCreateOrUpdateParameters(
@@ -73,35 +70,35 @@ def create_timeseriesinsights_environment_longterm(cmd, client,
         time_series_id_properties=[TimeSeriesIdProperty(name=time_series_id_properties, type="String")],
         storage_configuration=LongTermStorageConfigurationInput(account_name=storage_account_name, management_key=storage_management_key),
         data_retention=data_retention)
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, parameters=parameters)
+    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, parameters=parameters)
 
 
 def update_timeseriesinsights_environment_longterm(cmd, client,
-                                                   resource_group, environment_name,
-                                                   tags=None,
+                                                   resource_group_name, environment_name,
                                                    storage_management_key=None,
-                                                   data_retention=None):
+                                                   data_retention=None,
+                                                   tags=None):
     from .vendored_sdks.timeseriesinsights.models import LongTermEnvironmentUpdateParameters, \
         LongTermStorageConfigurationMutableProperties
     parameters = LongTermEnvironmentUpdateParameters(
         tags=tags,
-        storage_configuration=LongTermStorageConfigurationMutableProperties(management_key=storage_management_key),
+        storage_configuration=LongTermStorageConfigurationMutableProperties(management_key=storage_management_key) if storage_management_key else None,
         data_retention=data_retention)
-    return client.update(resource_group_name=resource_group, environment_name=environment_name, parameters=parameters)
+    return client.update(resource_group_name=resource_group_name, environment_name=environment_name, parameters=parameters)
 
 
-def list_timeseriesinsights_environment(cmd, client,
-                                        resource_group=None):
-    if resource_group is not None:
-        return client.list_by_resource_group(resource_group_name=resource_group)
+def list_timeseriesinsights_environment(cmd, client, resource_group_name=None):
+    if resource_group_name is not None:
+        return client.list_by_resource_group(resource_group_name=resource_group_name)
     return client.list_by_subscription()
 
 
 def create_timeseriesinsights_event_source_eventhub(cmd, client,
-                                                    resource_group, environment_name, event_source_name, location,
+                                                    resource_group_name, environment_name, event_source_name,
                                                     timestamp_property_name, event_source_resource_id,
                                                     service_bus_namespace, event_hub_name,
-                                                    consumer_group_name, key_name, shared_access_key, tags=None):
+                                                    consumer_group_name, key_name, shared_access_key,
+                                                    location=None, tags=None):
     # https://docs.microsoft.com/en-us/rest/api/time-series-insights/management/eventsources/createorupdate
     from azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models import EventHubEventSourceCreateOrUpdateParameters
     parameters = EventHubEventSourceCreateOrUpdateParameters(
@@ -115,13 +112,13 @@ def create_timeseriesinsights_event_source_eventhub(cmd, client,
         shared_access_key=shared_access_key,
         tags=tags
     )
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=event_source_name, parameters=parameters)
+    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, event_source_name=event_source_name, parameters=parameters)
 
 
-def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group, environment_name, event_source_name,
-                                                    tags=None, timestamp_property_name=None,
+def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group_name, environment_name, event_source_name,
+                                                    timestamp_property_name=None,
                                                     local_timestamp_format=None, time_zone_offset_property_name=None,
-                                                    shared_access_key=None):
+                                                    shared_access_key=None, tags=None):
 
     from .vendored_sdks.timeseriesinsights.models import EventHubEventSourceUpdateParameters, LocalTimestamp, LocalTimestampTimeZoneOffset
     parameters = EventHubEventSourceUpdateParameters(tags=tags,
@@ -129,15 +126,15 @@ def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group,
                                                      local_timestamp=LocalTimestamp(format=local_timestamp_format, time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name)),
                                                      shared_access_key=shared_access_key)
 
-    return client.update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=event_source_name,
+    return client.update(resource_group_name=resource_group_name, environment_name=environment_name, event_source_name=event_source_name,
                          parameters=parameters)
 
 
 def create_timeseriesinsights_event_source_iothub(cmd, client,
-                                                  resource_group, environment_name, event_source_name, location,
+                                                  resource_group_name, environment_name, event_source_name,
                                                   timestamp_property_name, event_source_resource_id,
                                                   iot_hub_name,consumer_group_name, key_name, shared_access_key,
-                                                  tags=None):
+                                                  location=None, tags=None):
     from .vendored_sdks.timeseriesinsights.models import IoTHubEventSourceCreateOrUpdateParameters
     parameters = IoTHubEventSourceCreateOrUpdateParameters(
         location=location,
@@ -149,34 +146,36 @@ def create_timeseriesinsights_event_source_iothub(cmd, client,
         key_name=key_name,
         shared_access_key=shared_access_key)
     return client.create_or_update(
-        resource_group_name=resource_group, environment_name=environment_name, event_source_name=event_source_name,
+        resource_group_name=resource_group_name, environment_name=environment_name, event_source_name=event_source_name,
         parameters=parameters)
 
 
 def update_timeseriesinsights_event_source_iothub(cmd, client,
-                                                  resource_group,
+                                                  resource_group_name,
                                                   environment_name,
                                                   name,
-                                                  location,
-                                                  tags=None, timestamp_property_name=None,
+                                                  timestamp_property_name=None,
                                                   local_timestamp_format=None, time_zone_offset_property_name=None,
-                                                  shared_access_key=None,):
-    from .vendored_sdks.timeseriesinsights.models import IoTHubEventSourceUpdateParameters, LocalTimestamp, LocalTimestampTimeZoneOffset
+                                                  shared_access_key=None,
+                                                  location=None, tags=None):
+    from .vendored_sdks.timeseriesinsights.models import IoTHubEventSourceUpdateParameters, LocalTimestamp, \
+        LocalTimestampTimeZoneOffset
     parameters = IoTHubEventSourceUpdateParameters(
         tags=tags,
         timestamp_property_name=timestamp_property_name,
-        local_timestamp=LocalTimestamp(format=local_timestamp_format, time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name)),
+        local_timestamp=LocalTimestamp(format=local_timestamp_format,
+                                       time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name)),
         shared_access_key=shared_access_key
     )
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, event_source_name=name, location=location, tags=tags)
+    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, event_source_name=name, location=location, tags=tags)
 
 
 def create_timeseriesinsights_reference_data_set(cmd, client,
-                                                 resource_group, environment_name, reference_data_set_name,
-                                                 location,
+                                                 resource_group_name, environment_name, reference_data_set_name,
                                                  key_properties, data_string_comparison_behavior,
-                                                 tags=None,):
-    from .vendored_sdks.timeseriesinsights.models import ReferenceDataSetCreateOrUpdateParameters, ReferenceDataSetKeyProperty
+                                                 location=None, tags=None):
+    from .vendored_sdks.timeseriesinsights.models import ReferenceDataSetCreateOrUpdateParameters, \
+        ReferenceDataSetKeyProperty
 
     key_properties_list = []
     key_property_count, remaining = divmod(len(key_properties), 2)
@@ -195,26 +194,26 @@ def create_timeseriesinsights_reference_data_set(cmd, client,
         data_string_comparison_behavior=data_string_comparison_behavior
     )
 
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=reference_data_set_name, parameters=parameters)
+    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, reference_data_set_name=reference_data_set_name, parameters=parameters)
 
 
 def update_timeseriesinsights_reference_data_set(cmd, client,
-                                                 resource_group, environment_name, reference_data_set_name,
+                                                 resource_group_name, environment_name, reference_data_set_name,
                                                  tags=None):
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, reference_data_set_name=reference_data_set_name, tags=tags)
+    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, reference_data_set_name=reference_data_set_name, tags=tags)
 
 
 def create_timeseriesinsights_access_policy(cmd, client,
-                                            resource_group, environment_name, access_policy_name,
+                                            resource_group_name, environment_name, access_policy_name,
                                             principal_object_id=None, description=None, roles=None):
     from .vendored_sdks.timeseriesinsights.models import AccessPolicyCreateOrUpdateParameters
     parameters = AccessPolicyCreateOrUpdateParameters(
         principal_object_id=principal_object_id,
         description=description,
         roles=roles)
-    return client.create_or_update(resource_group_name=resource_group, environment_name=environment_name, access_policy_name=access_policy_name, parameters=parameters)
+    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, access_policy_name=access_policy_name, parameters=parameters)
 
 
-def update_timeseriesinsights_access_policy(cmd, client, resource_group, environment_name, access_policy_name,
+def update_timeseriesinsights_access_policy(cmd, client, resource_group_name, environment_name, access_policy_name,
                                             description=None, roles=None):
-    return client.update(resource_group_name=resource_group, environment_name=environment_name, access_policy_name=access_policy_name, description=description, roles=roles)
+    return client.update(resource_group_name=resource_group_name, environment_name=environment_name, access_policy_name=access_policy_name, description=description, roles=roles)
