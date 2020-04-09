@@ -118,8 +118,8 @@ examples:
   - name: Create an event hub and use it for event source
     text: |
         rg=rg1
-        ehns=ehns0410
-        eh=eh0410
+        ehns=ehns0409
+        eh=eh0409
         az eventhubs namespace create -g $rg -n $ehns
         es_resource_id=$(az eventhubs eventhub create -g $rg -n $eh --namespace-name $ehns --query id --output tsv)
         shared_access_key=$(az eventhubs namespace authorization-rule keys list -g $rg --namespace-name $ehns -n RootManageSharedAccessKey --query primaryKey --output tsv)
@@ -140,17 +140,15 @@ examples:
 
 helps['timeseriesinsights event-source iothub create'] = """
 type: command
-short-summary: Create or update an event hub event source under the specified environment.
+short-summary: Create or update an iothub event source under the specified environment.
 examples:
-  - name: Create an event hub and use it for event source
+  - name: Create an iothub and use it for event source
     text: |
         rg=rg1
-        ehns=ehns0410
-        eh=eh0410
-        az eventhubs namespace create -g $rg -n $ehns
-        es_resource_id=$(az eventhubs eventhub create -g $rg -n $eh --namespace-name $ehns --query id --output tsv)
-        shared_access_key=$(az eventhubs namespace authorization-rule keys list -g $rg --namespace-name $ehns -n RootManageSharedAccessKey --query primaryKey --output tsv)
-        az timeseriesinsights event-source eventhub create -g $rg --environment-name env1 --name es1 --service-bus-namespace $ehns --event-hub-name $eh --key-name RootManageSharedAccessKey --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --consumer-group-name '$Default' --timestamp-property-name DeviceId
+        iothub=iothub0409
+        es_resource_id=$(az iot hub create -g $rg -n $iothub --query id --output tsv)
+        shared_access_key=$(az iot hub policy list -g $rg --hub-name $iothub --query "[?keyName=='iothubowner'].primaryKey" --output tsv)
+        az timeseriesinsights event-source iothub create -g $rg --environment-name env1 --name es2 --iot-hub-name $iothub --consumer-group-name '$Default' --key-name iothubowner --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --timestamp-property-name DeviceId
 """
 
 helps['timeseriesinsights event-source iothub update'] = """
@@ -158,11 +156,11 @@ type: command
 short-summary: Create or update an event source under the specified environment.
 examples:
   - name: Update timestampPropertyName
-    text: az timeseriesinsights event-source eventhub update -g {rg} --environment-name {env} --name {es} --timestamp-property-name DeviceId1
+    text: az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} --name {es} --timestamp-property-name DeviceId1
   - name: Update localTimestamp (not working yet)
-    text: az timeseriesinsights event-source eventhub update -g {rg} --environment-name {env} --name {es} --local-timestamp-format Timespan --time-zone-offset-property-name OffsetDeviceId1
+    text: az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} --name {es} --local-timestamp-format Timespan --time-zone-offset-property-name OffsetDeviceId1
   - name: Update sharedAccessKey
-    text: az timeseriesinsights event-source eventhub update -g {rg} --environment-name {env} --name {es} --shared-access-key {shared_access_key}
+    text: az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} --name {es} --shared-access-key {shared_access_key}
 """
 
 helps['timeseriesinsights event-source delete'] = """

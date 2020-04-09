@@ -169,14 +169,25 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         # Prepare the iot hub
         result = self.cmd('az iot hub create -g {rg} -n {iothub}').get_output_in_json()
         self.kwargs["es_resource_id"] = result["id"]
-        result = self.cmd('az iot hub policy list -g {rg} --hub-name {iothub}').get_output_in_json()
-        self.kwargs["key-name"] = result[0]["keyName"]
-        self.kwargs["shared_access_key"] = result[0]["primaryKey"]
+        self.kwargs["key_name"] = "iothubowner"
+        self.kwargs["shared_access_key"] = self.cmd("az iot hub policy list -g {rg} --hub-name {iothub} --query \"[?keyName=='iothubowner']\".primaryKey --output tsv").output
 
         self.cmd('az timeseriesinsights event-source iothub create -g {rg} --environment-name {env} --name {es} '
                  '--iot-hub-name {iothub} --consumer-group-name $Default '
-                 '--key-name {key-name} --shared-access-key {shared_access_key} '
+                 '--key-name {key_name} --shared-access-key {shared_access_key} '
                  '--event-source-resource-id {es_resource_id} --timestamp-property-name DeviceId')
+
+        self.cmd('az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} --name {es} '
+                 '--timestamp-property-name DeviceId1')
+
+        # # This doesn't work, due to error "The request body is not valid to update the event source's properties."
+        # self.cmd('az timeseriesinsights event-source list -g {rg} --environment-name {env} '
+        #          '--local-timestamp-format Timespan --time-zone-offset-property-name Offset')
+
+        self.kwargs["shared_access_key"] = self.cmd('az iot hub policy renew-key -g {rg} --hub-name {iothub} -n {key_name} --renew-key primary --query primaryKey --output tsv').output
+
+        self.cmd('az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} --name {es} '
+                 '--shared-access-key {shared_access_key}')
 
         # List
         self.cmd('az timeseriesinsights event-source list -g {rg} --environment-name {env}',

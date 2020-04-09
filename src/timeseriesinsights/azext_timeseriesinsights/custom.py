@@ -118,7 +118,6 @@ def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group_
                                                     timestamp_property_name=None,
                                                     local_timestamp_format=None, time_zone_offset_property_name=None,
                                                     shared_access_key=None, tags=None):
-
     from .vendored_sdks.timeseriesinsights.models import EventHubEventSourceUpdateParameters, LocalTimestamp, LocalTimestampTimeZoneOffset
     local_timestamp=None
     if local_timestamp_format and time_zone_offset_property_name:
@@ -160,17 +159,20 @@ def update_timeseriesinsights_event_source_iothub(cmd, client,
                                                   timestamp_property_name=None,
                                                   local_timestamp_format=None, time_zone_offset_property_name=None,
                                                   shared_access_key=None,
-                                                  location=None, tags=None):
+                                                  tags=None):
     from .vendored_sdks.timeseriesinsights.models import IoTHubEventSourceUpdateParameters, LocalTimestamp, \
         LocalTimestampTimeZoneOffset
+    local_timestamp = None
+    if local_timestamp_format and time_zone_offset_property_name:
+        local_timestamp = LocalTimestamp(format=local_timestamp_format,
+                                       time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name))
     parameters = IoTHubEventSourceUpdateParameters(
         tags=tags,
         timestamp_property_name=timestamp_property_name,
-        local_timestamp=LocalTimestamp(format=local_timestamp_format,
-                                       time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name)),
+        local_timestamp=local_timestamp,
         shared_access_key=shared_access_key
     )
-    return client.create_or_update(resource_group_name=resource_group_name, environment_name=environment_name, event_source_name=name, location=location, tags=tags)
+    return client.update(resource_group_name=resource_group_name, environment_name=environment_name, event_source_name=name, parameters=parameters)
 
 
 def create_timeseriesinsights_reference_data_set(cmd, client,
