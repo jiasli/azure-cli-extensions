@@ -22,7 +22,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/cli_test_timeseriesinsights000001?api-version=2019-07-01
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001","name":"cli_test_timeseriesinsights000001","type":"Microsoft.Resources/resourceGroups","location":"westus","tags":{"product":"azurecli","cause":"automation","date":"2020-04-09T08:40:28Z","StorageType":"Standard_LRS","type":"test"},"properties":{"provisioningState":"Succeeded"}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001","name":"cli_test_timeseriesinsights000001","type":"Microsoft.Resources/resourceGroups","location":"westus","tags":{"product":"azurecli","cause":"automation","date":"2020-04-09T10:21:41Z","StorageType":"Standard_LRS","type":"test"},"properties":{"provisioningState":"Succeeded"}}'
     headers:
       cache-control:
       - no-cache
@@ -31,7 +31,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:40:33 GMT
+      - Thu, 09 Apr 2020 10:21:47 GMT
       expires:
       - '-1'
       pragma:
@@ -74,7 +74,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005?api-version=2018-08-15-preview
   response:
     body:
-      string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"DeviceId1","type":"String"}],"creationTime":"2020-04-09T08:40:46+00:00","provisioningState":"Accepted","dataAccessId":"9ed67be0-3f66-437f-8126-90e0cf5d70dc","dataAccessFqdn":"9ed67be0-3f66-437f-8126-90e0cf5d70dc.env.timeseries.azure.com","requestApiVersion":"2018-08-15-preview"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005","name":"cli-test-tsi-env000005","type":"Microsoft.TimeSeriesInsights/Environments"}'
+      string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"DeviceId1","type":"String"}],"creationTime":"2020-04-09T10:21:55+00:00","provisioningState":"Accepted","dataAccessId":"889488ca-db21-4752-a03a-b4755e78dd8f","dataAccessFqdn":"889488ca-db21-4752-a03a-b4755e78dd8f.env.timeseries.azure.com","requestApiVersion":"2018-08-15-preview"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005","name":"cli-test-tsi-env000005","type":"Microsoft.TimeSeriesInsights/Environments"}'
     headers:
       cache-control:
       - no-cache
@@ -83,7 +83,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 09 Apr 2020 08:40:48 GMT
+      - Thu, 09 Apr 2020 10:21:57 GMT
       expires:
       - '-1'
       pragma:
@@ -95,7 +95,7 @@ interactions:
       x-content-type-options:
       - nosniff
       x-ms-ratelimit-remaining-subscription-writes:
-      - '1199'
+      - '1197'
     status:
       code: 201
       message: Created
@@ -121,7 +121,7 @@ interactions:
   response:
     body:
       string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"DeviceId1","type":"String"}],"creationTime":"Thu,
-        09 Apr 2020 08:40:46 GMT","provisioningState":"Creating","requestApiVersion":"2018-08-15-preview","dataAccessId":"9ed67be0-3f66-437f-8126-90e0cf5d70dc","dataAccessFqdn":"9ed67be0-3f66-437f-8126-90e0cf5d70dc.env.timeseries.azure.com"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005","name":"cli-test-tsi-env000005","type":"Microsoft.TimeSeriesInsights/Environments"}'
+        09 Apr 2020 10:21:55 GMT","provisioningState":"Creating","requestApiVersion":"2018-08-15-preview","dataAccessId":"889488ca-db21-4752-a03a-b4755e78dd8f","dataAccessFqdn":"889488ca-db21-4752-a03a-b4755e78dd8f.env.timeseries.azure.com"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005","name":"cli-test-tsi-env000005","type":"Microsoft.TimeSeriesInsights/Environments"}'
     headers:
       cache-control:
       - no-cache
@@ -130,7 +130,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 09 Apr 2020 08:41:20 GMT
+      - Thu, 09 Apr 2020 10:22:29 GMT
       expires:
       - '-1'
       pragma:
@@ -170,7 +170,7 @@ interactions:
   response:
     body:
       string: '{"sku":{"name":"S1","capacity":1},"kind":"Standard","location":"westus","tags":null,"properties":{"dataRetentionTime":"P31D","storageLimitExceededBehavior":"PauseIngress","partitionKeyProperties":[{"name":"DeviceId1","type":"String"}],"creationTime":"Thu,
-        09 Apr 2020 08:40:46 GMT","provisioningState":"Succeeded","requestApiVersion":"2018-08-15-preview","dataAccessId":"9ed67be0-3f66-437f-8126-90e0cf5d70dc","dataAccessFqdn":"9ed67be0-3f66-437f-8126-90e0cf5d70dc.env.timeseries.azure.com"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005","name":"cli-test-tsi-env000005","type":"Microsoft.TimeSeriesInsights/Environments"}'
+        09 Apr 2020 10:21:55 GMT","provisioningState":"Succeeded","requestApiVersion":"2018-08-15-preview","dataAccessId":"889488ca-db21-4752-a03a-b4755e78dd8f","dataAccessFqdn":"889488ca-db21-4752-a03a-b4755e78dd8f.env.timeseries.azure.com"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005","name":"cli-test-tsi-env000005","type":"Microsoft.TimeSeriesInsights/Environments"}'
     headers:
       cache-control:
       - no-cache
@@ -179,7 +179,7 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 09 Apr 2020 08:41:50 GMT
+      - Thu, 09 Apr 2020 10:22:59 GMT
       expires:
       - '-1'
       pragma:
@@ -219,7 +219,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/cli_test_timeseriesinsights000001?api-version=2019-07-01
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001","name":"cli_test_timeseriesinsights000001","type":"Microsoft.Resources/resourceGroups","location":"westus","tags":{"product":"azurecli","cause":"automation","date":"2020-04-09T08:40:28Z","StorageType":"Standard_LRS","type":"test"},"properties":{"provisioningState":"Succeeded"}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001","name":"cli_test_timeseriesinsights000001","type":"Microsoft.Resources/resourceGroups","location":"westus","tags":{"product":"azurecli","cause":"automation","date":"2020-04-09T10:21:41Z","StorageType":"Standard_LRS","type":"test"},"properties":{"provisioningState":"Succeeded"}}'
     headers:
       cache-control:
       - no-cache
@@ -228,7 +228,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:41:52 GMT
+      - Thu, 09 Apr 2020 10:23:00 GMT
       expires:
       - '-1'
       pragma:
@@ -269,7 +269,7 @@ interactions:
   response:
     body:
       string: '{"sku":{"name":"Standard","tier":"Standard","capacity":1},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003","name":"cli-test-tsi-ehns000003","type":"Microsoft.EventHub/Namespaces","location":"West
-        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Created","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T08:41:57.467Z","updatedAt":"2020-04-09T08:41:57.467Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Activating"}}'
+        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Created","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T10:23:06.247Z","updatedAt":"2020-04-09T10:23:06.247Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Activating"}}'
     headers:
       cache-control:
       - no-cache
@@ -278,7 +278,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:41:58 GMT
+      - Thu, 09 Apr 2020 10:23:08 GMT
       expires:
       - '-1'
       pragma:
@@ -322,7 +322,7 @@ interactions:
   response:
     body:
       string: '{"sku":{"name":"Standard","tier":"Standard","capacity":1},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003","name":"cli-test-tsi-ehns000003","type":"Microsoft.EventHub/Namespaces","location":"West
-        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Created","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T08:41:57.467Z","updatedAt":"2020-04-09T08:41:57.467Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Activating"}}'
+        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Created","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T10:23:06.247Z","updatedAt":"2020-04-09T10:23:06.247Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Activating"}}'
     headers:
       cache-control:
       - no-cache
@@ -331,7 +331,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:42:29 GMT
+      - Thu, 09 Apr 2020 10:23:38 GMT
       expires:
       - '-1'
       pragma:
@@ -373,7 +373,7 @@ interactions:
   response:
     body:
       string: '{"sku":{"name":"Standard","tier":"Standard","capacity":1},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003","name":"cli-test-tsi-ehns000003","type":"Microsoft.EventHub/Namespaces","location":"West
-        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Succeeded","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T08:41:57.467Z","updatedAt":"2020-04-09T08:42:44.347Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Active"}}'
+        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Succeeded","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T10:23:06.247Z","updatedAt":"2020-04-09T10:23:52.573Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Active"}}'
     headers:
       cache-control:
       - no-cache
@@ -382,7 +382,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:43:07 GMT
+      - Thu, 09 Apr 2020 10:24:09 GMT
       expires:
       - '-1'
       pragma:
@@ -426,7 +426,7 @@ interactions:
   response:
     body:
       string: '{"sku":{"name":"Standard","tier":"Standard","capacity":1},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003","name":"cli-test-tsi-ehns000003","type":"Microsoft.EventHub/Namespaces","location":"West
-        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Succeeded","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T08:41:57.467Z","updatedAt":"2020-04-09T08:42:44.347Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Active"}}'
+        US","tags":{},"properties":{"isAutoInflateEnabled":false,"maximumThroughputUnits":0,"kafkaEnabled":true,"provisioningState":"Succeeded","metricId":"0b1f6471-1bf0-4dda-aec3-cb9272f09590:cli-test-tsi-ehns000003","createdAt":"2020-04-09T10:23:06.247Z","updatedAt":"2020-04-09T10:23:52.573Z","serviceBusEndpoint":"https://cli-test-tsi-ehns000003.servicebus.windows.net:443/","status":"Active"}}'
     headers:
       cache-control:
       - no-cache
@@ -435,7 +435,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:43:07 GMT
+      - Thu, 09 Apr 2020 10:24:18 GMT
       expires:
       - '-1'
       pragma:
@@ -483,7 +483,7 @@ interactions:
   response:
     body:
       string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","name":"cli-test-tsi-eh000004","type":"Microsoft.EventHub/Namespaces/EventHubs","location":"West
-        US","properties":{"messageRetentionInDays":7,"partitionCount":4,"status":"Active","createdAt":"2020-04-09T08:43:11.75Z","updatedAt":"2020-04-09T08:43:12.327Z","partitionIds":["0","1","2","3"]}}'
+        US","properties":{"messageRetentionInDays":7,"partitionCount":4,"status":"Active","createdAt":"2020-04-09T10:24:22.02Z","updatedAt":"2020-04-09T10:24:22.863Z","partitionIds":["0","1","2","3"]}}'
     headers:
       cache-control:
       - no-cache
@@ -492,63 +492,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:43:12 GMT
-      expires:
-      - '-1'
-      pragma:
-      - no-cache
-      server:
-      - Service-Bus-Resource-Provider/CH3
-      - Microsoft-HTTPAPI/2.0
-      server-sb:
-      - Service-Bus-Resource-Provider/CH3
-      strict-transport-security:
-      - max-age=31536000; includeSubDomains
-      transfer-encoding:
-      - chunked
-      vary:
-      - Accept-Encoding
-      x-content-type-options:
-      - nosniff
-      x-ms-ratelimit-remaining-subscription-writes:
-      - '1198'
-    status:
-      code: 200
-      message: OK
-- request:
-    body: null
-    headers:
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip, deflate
-      CommandName:
-      - eventhubs namespace authorization-rule keys list
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '0'
-      ParameterSetName:
-      - -g --namespace-name -n
-      User-Agent:
-      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
-        azure-mgmt-eventhub/3.0.0 Azure-SDK-For-Python AZURECLI/2.3.1
-      accept-language:
-      - en-US
-    method: POST
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/AuthorizationRules/RootManageSharedAccessKey/listKeys?api-version=2017-04-01
-  response:
-    body:
-      string: '{"primaryConnectionString":"Endpoint=sb://cli-test-tsi-ehns000003.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=0UxtM9uBcrS+WYs6iZITe8DDe6+6SMXvuloTQd1I0BY=","secondaryConnectionString":"Endpoint=sb://cli-test-tsi-ehns000003.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=qwt5kQutY8l62slN3k5zr5/BiRYz42yp9osq6ZUqgbc=","primaryKey":"0UxtM9uBcrS+WYs6iZITe8DDe6+6SMXvuloTQd1I0BY=","secondaryKey":"qwt5kQutY8l62slN3k5zr5/BiRYz42yp9osq6ZUqgbc=","keyName":"RootManageSharedAccessKey"}'
-    headers:
-      cache-control:
-      - no-cache
-      content-length:
-      - '559'
-      content-type:
-      - application/json; charset=utf-8
-      date:
-      - Thu, 09 Apr 2020 08:43:14 GMT
+      - Thu, 09 Apr 2020 10:24:23 GMT
       expires:
       - '-1'
       pragma:
@@ -579,6 +523,62 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       CommandName:
+      - eventhubs namespace authorization-rule keys list
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      ParameterSetName:
+      - -g --namespace-name -n
+      User-Agent:
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-eventhub/3.0.0 Azure-SDK-For-Python AZURECLI/2.3.1
+      accept-language:
+      - en-US
+    method: POST
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/AuthorizationRules/RootManageSharedAccessKey/listKeys?api-version=2017-04-01
+  response:
+    body:
+      string: '{"primaryConnectionString":"Endpoint=sb://cli-test-tsi-ehns000003.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=R91Qcs8mR/ywCuQLUzNjaBeeL2xxeVulG1ol4AwrA+4=","secondaryConnectionString":"Endpoint=sb://cli-test-tsi-ehns000003.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=cNKfUXML+3zdfuducY/oj7meT31diyNWGqXUY1VR6hU=","primaryKey":"R91Qcs8mR/ywCuQLUzNjaBeeL2xxeVulG1ol4AwrA+4=","secondaryKey":"cNKfUXML+3zdfuducY/oj7meT31diyNWGqXUY1VR6hU=","keyName":"RootManageSharedAccessKey"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '559'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 09 Apr 2020 10:24:25 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Service-Bus-Resource-Provider/CH3
+      - Microsoft-HTTPAPI/2.0
+      server-sb:
+      - Service-Bus-Resource-Provider/CH3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1198'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      CommandName:
       - timeseriesinsights event-source eventhub create
       Connection:
       - keep-alive
@@ -594,7 +594,7 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/cli_test_timeseriesinsights000001?api-version=2019-07-01
   response:
     body:
-      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001","name":"cli_test_timeseriesinsights000001","type":"Microsoft.Resources/resourceGroups","location":"westus","tags":{"product":"azurecli","cause":"automation","date":"2020-04-09T08:40:28Z","StorageType":"Standard_LRS","type":"test"},"properties":{"provisioningState":"Succeeded"}}'
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001","name":"cli_test_timeseriesinsights000001","type":"Microsoft.Resources/resourceGroups","location":"westus","tags":{"product":"azurecli","cause":"automation","date":"2020-04-09T10:21:41Z","StorageType":"Standard_LRS","type":"test"},"properties":{"provisioningState":"Succeeded"}}'
     headers:
       cache-control:
       - no-cache
@@ -603,7 +603,7 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Thu, 09 Apr 2020 08:43:15 GMT
+      - Thu, 09 Apr 2020 10:24:26 GMT
       expires:
       - '-1'
       pragma:
@@ -622,7 +622,7 @@ interactions:
       "DeviceId", "eventSourceResourceId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004",
       "serviceBusNamespace": "cli-test-tsi-ehns000003", "eventHubName": "cli-test-tsi-eh000004",
       "consumerGroupName": "$Default", "keyName": "RootManageSharedAccessKey", "sharedAccessKey":
-      "0UxtM9uBcrS+WYs6iZITe8DDe6+6SMXvuloTQd1I0BY="}}'''
+      "R91Qcs8mR/ywCuQLUzNjaBeeL2xxeVulG1ol4AwrA+4="}}'''
     headers:
       Accept:
       - application/json
@@ -649,7 +649,7 @@ interactions:
   response:
     body:
       string: '{"kind":"Microsoft.EventHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","serviceBusNamespace":"cli-test-tsi-ehns000003","eventHubName":"cli-test-tsi-eh000004","consumerGroupName":"$Default","keyName":"RootManageSharedAccessKey","creationTime":"Thu,
-        09 Apr 2020 08:43:21 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
+        09 Apr 2020 10:24:32 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
     headers:
       cache-control:
       - no-cache
@@ -658,7 +658,63 @@ interactions:
       content-type:
       - application/json
       date:
-      - Thu, 09 Apr 2020 08:43:21 GMT
+      - Thu, 09 Apr 2020 10:24:33 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1197'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"properties": {"timestampPropertyName": "DeviceId1"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      CommandName:
+      - timeseriesinsights event-source eventhub update
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '54'
+      Content-Type:
+      - application/json; charset=utf-8
+      ParameterSetName:
+      - -g --environment-name --name --timestamp-property-name
+      User-Agent:
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
+      accept-language:
+      - en-US
+    method: PATCH
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventSources/cli-test-tsi-es000002?api-version=2018-08-15-preview
+  response:
+    body:
+      string: '{"kind":"Microsoft.EventHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId1","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","serviceBusNamespace":"cli-test-tsi-ehns000003","eventHubName":"cli-test-tsi-eh000004","consumerGroupName":"$Default","keyName":"RootManageSharedAccessKey","creationTime":"Thu,
+        09 Apr 2020 10:24:32 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '983'
+      content-type:
+      - application/json
+      date:
+      - Thu, 09 Apr 2020 10:24:37 GMT
       expires:
       - '-1'
       pragma:
@@ -675,6 +731,120 @@ interactions:
       - nosniff
       x-ms-ratelimit-remaining-subscription-writes:
       - '1198'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"keyType": "PrimaryKey"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      CommandName:
+      - eventhubs namespace authorization-rule keys renew
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '25'
+      Content-Type:
+      - application/json; charset=utf-8
+      ParameterSetName:
+      - -g --namespace-name -n --key --query --output
+      User-Agent:
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-eventhub/3.0.0 Azure-SDK-For-Python AZURECLI/2.3.1
+      accept-language:
+      - en-US
+    method: POST
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/AuthorizationRules/RootManageSharedAccessKey/regenerateKeys?api-version=2017-04-01
+  response:
+    body:
+      string: '{"primaryConnectionString":"Endpoint=sb://cli-test-tsi-ehns000003.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=J3LwCoHEbiOEg5s9tg5jC7B6nJ9X1rsN1nnzfGWtwdw=","secondaryConnectionString":"Endpoint=sb://cli-test-tsi-ehns000003.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=cNKfUXML+3zdfuducY/oj7meT31diyNWGqXUY1VR6hU=","primaryKey":"J3LwCoHEbiOEg5s9tg5jC7B6nJ9X1rsN1nnzfGWtwdw=","secondaryKey":"cNKfUXML+3zdfuducY/oj7meT31diyNWGqXUY1VR6hU=","keyName":"RootManageSharedAccessKey"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '559'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 09 Apr 2020 10:24:44 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Service-Bus-Resource-Provider/CH3
+      - Microsoft-HTTPAPI/2.0
+      server-sb:
+      - Service-Bus-Resource-Provider/CH3
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1197'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"properties": {"sharedAccessKey": "J3LwCoHEbiOEg5s9tg5jC7B6nJ9X1rsN1nnzfGWtwdw="}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      CommandName:
+      - timeseriesinsights event-source eventhub update
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/json; charset=utf-8
+      ParameterSetName:
+      - -g --environment-name --name --shared-access-key
+      User-Agent:
+      - python/3.8.2 (Windows-10-10.0.18362-SP0) msrest/0.6.11 msrest_azure/0.6.3
+        azure-mgmt-timeseriesinsights/0.2.0 Azure-SDK-For-Python AZURECLI/2.3.1
+      accept-language:
+      - en-US
+    method: PATCH
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventSources/cli-test-tsi-es000002?api-version=2018-08-15-preview
+  response:
+    body:
+      string: '{"kind":"Microsoft.EventHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId1","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","serviceBusNamespace":"cli-test-tsi-ehns000003","eventHubName":"cli-test-tsi-eh000004","consumerGroupName":"$Default","keyName":"RootManageSharedAccessKey","creationTime":"Thu,
+        09 Apr 2020 10:24:32 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '983'
+      content-type:
+      - application/json
+      date:
+      - Thu, 09 Apr 2020 10:24:47 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1197'
     status:
       code: 200
       message: OK
@@ -700,17 +870,17 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventSources?api-version=2018-08-15-preview
   response:
     body:
-      string: '{"value":[{"kind":"Microsoft.EventHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","serviceBusNamespace":"cli-test-tsi-ehns000003","eventHubName":"cli-test-tsi-eh000004","consumerGroupName":"$Default","keyName":"RootManageSharedAccessKey","creationTime":"Thu,
-        09 Apr 2020 08:43:21 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}]}'
+      string: '{"value":[{"kind":"Microsoft.EventHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId1","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","serviceBusNamespace":"cli-test-tsi-ehns000003","eventHubName":"cli-test-tsi-eh000004","consumerGroupName":"$Default","keyName":"RootManageSharedAccessKey","creationTime":"Thu,
+        09 Apr 2020 10:24:32 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}]}'
     headers:
       cache-control:
       - no-cache
       content-length:
-      - '994'
+      - '995'
       content-type:
       - application/json
       date:
-      - Thu, 09 Apr 2020 08:43:25 GMT
+      - Thu, 09 Apr 2020 10:24:50 GMT
       expires:
       - '-1'
       pragma:
@@ -750,17 +920,17 @@ interactions:
     uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventSources/cli-test-tsi-es000002?api-version=2018-08-15-preview
   response:
     body:
-      string: '{"kind":"Microsoft.EventHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","serviceBusNamespace":"cli-test-tsi-ehns000003","eventHubName":"cli-test-tsi-eh000004","consumerGroupName":"$Default","keyName":"RootManageSharedAccessKey","creationTime":"Thu,
-        09 Apr 2020 08:43:21 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
+      string: '{"kind":"Microsoft.EventHub","location":"westus","tags":null,"properties":{"timestampPropertyName":"DeviceId1","eventSourceResourceId":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.EventHub/namespaces/cli-test-tsi-ehns000003/eventhubs/cli-test-tsi-eh000004","serviceBusNamespace":"cli-test-tsi-ehns000003","eventHubName":"cli-test-tsi-eh000004","consumerGroupName":"$Default","keyName":"RootManageSharedAccessKey","creationTime":"Thu,
+        09 Apr 2020 10:24:32 GMT","provisioningState":"Succeeded"},"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_timeseriesinsights000001/providers/Microsoft.TimeSeriesInsights/environments/cli-test-tsi-env000005/eventsources/cli-test-tsi-es000002","name":"cli-test-tsi-es000002","type":"Microsoft.TimeSeriesInsights/Environments/EventSources"}'
     headers:
       cache-control:
       - no-cache
       content-length:
-      - '982'
+      - '983'
       content-type:
       - application/json
       date:
-      - Thu, 09 Apr 2020 08:43:27 GMT
+      - Thu, 09 Apr 2020 10:24:51 GMT
       expires:
       - '-1'
       pragma:
@@ -809,7 +979,7 @@ interactions:
       content-length:
       - '0'
       date:
-      - Thu, 09 Apr 2020 08:43:33 GMT
+      - Thu, 09 Apr 2020 10:24:58 GMT
       expires:
       - '-1'
       pragma:

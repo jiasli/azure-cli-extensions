@@ -99,7 +99,6 @@ def create_timeseriesinsights_event_source_eventhub(cmd, client,
                                                     service_bus_namespace, event_hub_name,
                                                     consumer_group_name, key_name, shared_access_key,
                                                     location=None, tags=None):
-    # https://docs.microsoft.com/en-us/rest/api/time-series-insights/management/eventsources/createorupdate
     from azext_timeseriesinsights.vendored_sdks.timeseriesinsights.models import EventHubEventSourceCreateOrUpdateParameters
     parameters = EventHubEventSourceCreateOrUpdateParameters(
         location=location,
@@ -121,9 +120,13 @@ def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group_
                                                     shared_access_key=None, tags=None):
 
     from .vendored_sdks.timeseriesinsights.models import EventHubEventSourceUpdateParameters, LocalTimestamp, LocalTimestampTimeZoneOffset
+    local_timestamp=None
+    if local_timestamp_format and time_zone_offset_property_name:
+        local_timestamp=LocalTimestamp(format=local_timestamp_format,
+                                       time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name))
     parameters = EventHubEventSourceUpdateParameters(tags=tags,
                                                      timestamp_property_name=timestamp_property_name,
-                                                     local_timestamp=LocalTimestamp(format=local_timestamp_format, time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name)),
+                                                     local_timestamp=local_timestamp,
                                                      shared_access_key=shared_access_key)
 
     return client.update(resource_group_name=resource_group_name, environment_name=environment_name, event_source_name=event_source_name,

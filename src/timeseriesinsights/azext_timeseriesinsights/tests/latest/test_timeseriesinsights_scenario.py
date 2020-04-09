@@ -125,13 +125,25 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         result = self.cmd('az eventhubs eventhub create -g {rg} -n {eh} --namespace-name {ehns}').get_output_in_json()
         self.kwargs["es_resource_id"] = result["id"]
         result = self.cmd('az eventhubs namespace authorization-rule keys list -g {rg} --namespace-name {ehns} -n RootManageSharedAccessKey').get_output_in_json()
-        self.kwargs["shared-access-key"] = result["primaryKey"]
+        self.kwargs["shared_access_key"] = result["primaryKey"]
 
         self.cmd('az timeseriesinsights event-source eventhub create -g {rg} --environment-name {env} --name {es} '
                  '--service-bus-namespace {ehns} --event-hub-name {eh} --key-name RootManageSharedAccessKey '
-                 '--shared-access-key {shared-access-key} '
+                 '--shared-access-key {shared_access_key} '
                  '--event-source-resource-id {es_resource_id} '
                  '--consumer-group-name $Default --timestamp-property-name DeviceId')
+
+        self.cmd('az timeseriesinsights event-source eventhub update -g {rg} --environment-name {env} --name {es} '
+                 '--timestamp-property-name DeviceId1')
+
+        # This doesn't work, due to error "The request body is not valid to update the event source's properties."
+        # self.cmd('az timeseriesinsights event-source eventhub update -g {rg} --environment-name {env} --name {es} '
+        #          '--local-timestamp-format Timespan --time-zone-offset-property-name Offset')
+
+        # Renew a key
+        self.kwargs["shared_access_key"] = self.cmd('az eventhubs namespace authorization-rule keys renew -g {rg} --namespace-name {ehns} -n RootManageSharedAccessKey --key PrimaryKey --query primaryKey --output tsv').output
+
+        self.cmd('az timeseriesinsights event-source eventhub update -g {rg} --environment-name {env} --name {es} --shared-access-key {shared_access_key}')
 
         # List
         self.cmd('az timeseriesinsights event-source list -g {rg} --environment-name {env}',
@@ -159,11 +171,11 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.kwargs["es_resource_id"] = result["id"]
         result = self.cmd('az iot hub policy list -g {rg} --hub-name {iothub}').get_output_in_json()
         self.kwargs["key-name"] = result[0]["keyName"]
-        self.kwargs["shared-access-key"] = result[0]["primaryKey"]
+        self.kwargs["shared_access_key"] = result[0]["primaryKey"]
 
         self.cmd('az timeseriesinsights event-source iothub create -g {rg} --environment-name {env} --name {es} '
                  '--iot-hub-name {iothub} --consumer-group-name $Default '
-                 '--key-name {key-name} --shared-access-key {shared-access-key} '
+                 '--key-name {key-name} --shared-access-key {shared_access_key} '
                  '--event-source-resource-id {es_resource_id} --timestamp-property-name DeviceId')
 
         # List
@@ -227,8 +239,10 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         self.cmd('az timeseriesinsights access-policy delete -g {rg} --environment-name {env} --name ap1',
                  checks=[])
 
-    @unittest.skip('We have to skip this as the service/SDK is buggy.')
+    #@unittest.skip('We have to skip this as the service/SDK is buggy.')
     def test_debug(self):
+        result = self.cmd('az eventhubs namespace authorization-rule keys renew -g rg1 --namespace-name jlehns -n RootManageSharedAccessKey --key PrimaryKey --query primaryKey --output tsv').output
+
         self.kwargs.update({
             'rds': 'rds1',
             'env': 'env1',
