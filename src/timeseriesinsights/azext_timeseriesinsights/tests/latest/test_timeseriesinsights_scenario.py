@@ -253,27 +253,3 @@ class TimeSeriesInsightsClientScenarioTest(ScenarioTest):
         # Delete
         self.cmd('az timeseriesinsights access-policy delete -g {rg} --environment-name {env} --name ap1',
                  checks=[])
-
-    #@unittest.skip('We have to skip this as the service/SDK is buggy.')
-    def test_debug(self):
-        result = self.cmd('az eventhubs namespace authorization-rule keys renew -g rg1 --namespace-name jlehns -n RootManageSharedAccessKey --key PrimaryKey --query primaryKey --output tsv').output
-
-        self.kwargs.update({
-            'rds': 'rds1',
-            'env': 'env1',
-            'rg': 'jlrg'
-        })
-
-        # Create
-        self.cmd('az timeseriesinsights reference-data-set create -g {rg} --environment-name {env} --name {rds} '
-                 '--key-properties DeviceId1 String DeviceFloor Double --data-string-comparison-behavior Ordinal')
-
-        # List
-        self.cmd('az timeseriesinsights reference-data-set list -g {rg} --environment-name {env}',
-                 checks=[self.check('length(@)', 1)])
-
-        # Show
-        self.cmd('az timeseriesinsights reference-data-set show -g {rg} --environment-name {env} -n {rds}')
-
-        # Delete
-        self.cmd('az timeseriesinsights reference-data-set delete -g {rg} --environment-name {env} -n {rds}')

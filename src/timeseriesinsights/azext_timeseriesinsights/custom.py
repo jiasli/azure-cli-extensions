@@ -15,7 +15,6 @@ def list_timeseriesinsights_operation(cmd, client):
 
 def create_timeseriesinsights_environment_standard(cmd, client,
                                                    resource_group_name, environment_name,
-
                                                    sku_name, sku_capacity,
                                                    data_retention_time,
                                                    storage_limit_exceeded_behavior=None,
