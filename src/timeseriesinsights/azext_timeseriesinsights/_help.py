@@ -62,7 +62,7 @@ examples:
         storage=mystorageaccount
         rg={rg}
         az storage account create -g $rg -n $storage --https-only
-        key=$(az storage account keys list -g $rg -n $storage --query [0].value --output tsv)        
+        key=$(az storage account keys list -g $rg -n $storage --query [0].value --output tsv)
         az timeseriesinsights environment longterm create --resource-group $rg --name {env} --location westus --sku-name L1 --sku-capacity 1 --data-retention 7 --time-series-id-properties DeviceId1 --storage-account-name $storage --storage-management-key $key
 """
 

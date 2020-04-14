@@ -102,4 +102,3 @@ def load_command_table(self, _):
         g.show_command('show', 'get')
         g.command('list', 'list_by_environment')
     # endregion
-

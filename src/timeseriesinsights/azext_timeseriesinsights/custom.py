@@ -119,10 +119,10 @@ def update_timeseriesinsights_event_source_eventhub(cmd, client, resource_group_
                                                     local_timestamp_format=None, time_zone_offset_property_name=None,
                                                     shared_access_key=None, tags=None):
     from .vendored_sdks.timeseriesinsights.models import EventHubEventSourceUpdateParameters, LocalTimestamp, LocalTimestampTimeZoneOffset
-    local_timestamp=None
+    local_timestamp = None
     if local_timestamp_format and time_zone_offset_property_name:
-        local_timestamp=LocalTimestamp(format=local_timestamp_format,
-                                       time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name))
+        local_timestamp = LocalTimestamp(format=local_timestamp_format,
+                                         time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name))
     parameters = EventHubEventSourceUpdateParameters(tags=tags,
                                                      timestamp_property_name=timestamp_property_name,
                                                      local_timestamp=local_timestamp,
@@ -167,7 +167,7 @@ def update_timeseriesinsights_event_source_iothub(cmd, client,
     local_timestamp = None
     if local_timestamp_format and time_zone_offset_property_name:
         local_timestamp = LocalTimestamp(format=local_timestamp_format,
-                                       time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name))
+                                         time_zone_offset=LocalTimestampTimeZoneOffset(property_name=time_zone_offset_property_name))
     parameters = IoTHubEventSourceUpdateParameters(
         tags=tags,
         timestamp_property_name=timestamp_property_name,
@@ -190,7 +190,7 @@ def create_timeseriesinsights_reference_data_set(cmd, client,
         from knack.util import CLIError
         raise CLIError("Usage error: --key-properties NAME TYPE ...")
 
-    for i in range(0, key_property_count):
+    for _ in range(0, key_property_count):
         # eg. --key-properties DeviceId1 String DeviceFloor Double
         key_properties_list.append(ReferenceDataSetKeyProperty(name=key_properties.pop(0), type=key_properties.pop(0)))
 

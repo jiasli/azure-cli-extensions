@@ -13,13 +13,13 @@ from azure.cli.core.commands.parameters import (
     resource_group_name_type,
     get_location_type
 )
-from azext_timeseriesinsights.action import TimeSeriesIdPropertyAction
 from azure.cli.core.commands.validators import get_default_location_from_resource_group
 
 from knack.arguments import CLIArgumentType
 from ._validators import iso_8601_timespace
 
 environment_name_type = CLIArgumentType(help='The name of the Time Series Insights environment associated with the specified resource group.')
+
 
 def load_arguments(self, _):
 
